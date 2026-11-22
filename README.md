@@ -17,6 +17,14 @@ A finance analyst portfolio project by **Michael Adebayo**, combining financial 
 
 The methodology and synthetic-data status stay visible throughout the experience. Sidebar filters apply to all tabs; account/scenario filters in Data & exports affect only its table and download.
 
+## Light and dark appearance
+
+Use the **top-right menu (⋮) → Light / Dark** to change appearance. The sidebar shows the current mode. Native Streamlit theming updates dropdowns, multi-select tags, sliders, data tables and dialogs together; custom KPI cards and Plotly charts follow the same mode. A lightweight session-local fragment detects appearance changes and refreshes custom visuals within about one second while the app is active.
+
+The dark navy design remains the configured base. Streamlit respects the viewer's saved preference or device appearance when System is selected, so a light-mode device can open in light mode. A manual choice is saved in that browser. Theme choice is independent for each viewer and changes presentation only; it does not reset filters or alter calculations/downloads.
+
+Both modes use green for favourable contributions and red for adverse contributions, with signed values and assessment labels alongside colour. Light mode uses darker accents for legibility on pale backgrounds.
+
 ## Screenshots
 
 ![Performance overview](screenshots/performance.png)
@@ -25,7 +33,9 @@ The methodology and synthetic-data status stay visible throughout the experience
 
 ![Cash movement analysis](screenshots/cash-movement.png)
 
-Mobile captures: [performance](screenshots/mobile-performance.png) and [CSV export](screenshots/mobile-export.png).
+Light mode: [performance](screenshots/performance-light.png), [budget variance](screenshots/budget-variance-light.png) and [data table](screenshots/data-light.png).
+
+Mobile captures: [dark performance](screenshots/mobile-performance.png), [dark CSV export](screenshots/mobile-export.png), [light performance](screenshots/mobile-performance-light.png) and [light CSV export](screenshots/mobile-export-light.png).
 
 ## Data and generation
 
@@ -94,6 +104,7 @@ The six financial tests cover the operating profit identity, an independently re
 finance-performance-dashboard/
 ├── app.py
 ├── finance.py
+├── themes.py
 ├── generate_data.py
 ├── requirements.txt
 ├── README.md
@@ -107,13 +118,22 @@ finance-performance-dashboard/
 └── tests/test_finance.py
 ```
 
-Technologies: Python, Streamlit, Pandas, NumPy and Plotly. The native dark theme uses a navy background with mint, blue and warm-gold accents. Direct dependencies are pinned to the versions used for local verification.
+Technologies: Python, Streamlit, Pandas, NumPy and Plotly. Native light and dark themes share green, blue and gold accents, with contrasting foreground colours. `themes.py` defines matching custom-component and chart palettes; `.streamlit/config.toml` defines native controls. Direct dependencies are pinned to the versions used for local verification.
 
-## Deployment preparation
+## GitHub and deployment
 
-The project is prepared for a repository named `finance-performance-dashboard`, branch `main`, entrypoint `app.py`, Python **3.12** and Streamlit Community Cloud. It requires no secrets or database service. All generated data are bundled locally.
+GitHub repository: [michael-adebayo256/finance-performance-dashboard](https://github.com/michael-adebayo256/finance-performance-dashboard). Deployment configuration: branch `main`, entrypoint `app.py`, Python **3.12** and Streamlit Community Cloud. It requires no secrets or database service. All generated data are bundled locally.
 
-Publication status: **local project; no public repository or deployed URL yet**. After owner approval, push the reviewed files to a new GitHub repository, then select that repository, `main` and `app.py` in Community Cloud. Choose Python 3.12 in Advanced settings. Inspect the cloud build/runtime logs and test the returned public app URL before recording deployment as complete. A local browser test does not establish a successful cloud build.
+Public GitHub publication and deployment were approved by the owner. **Public app URL: pending Community Cloud deployment.**
+
+1. Open https://share.streamlit.io/ and select the `michael-adebayo256` workspace.
+2. Choose **Create app** → **Yup, I have an app**.
+3. Choose **Paste GitHub URL** and paste `https://github.com/michael-adebayo256/finance-performance-dashboard/blob/main/app.py`, or enter repository `michael-adebayo256/finance-performance-dashboard`, branch `main`, main file `app.py`.
+4. In **Advanced settings**, choose Python **3.12**. Leave Secrets empty.
+5. Choose an available app subdomain and click **Deploy**.
+6. Inspect the build/runtime logs and test the resulting public URL, filters, theme switch and downloads before marking cloud deployment verified.
+
+[Official Community Cloud deployment instructions](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy). A local browser test does not establish a successful cloud build.
 
 ## Portfolio discussion points
 

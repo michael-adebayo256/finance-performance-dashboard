@@ -34,3 +34,20 @@ Executed in headless Chromium against the local app on port 8602:
 ## Limits
 
 This is a targeted smoke test, not exhaustive device/accessibility testing. A fresh dependency installation, Community Cloud build and public deployment have not been tested. No cloud credentials, user data upload or external finance integration is required. The dashboard does not contain real financial data, forecasts, a complete balance sheet or statutory accounts.
+
+## Light and dark themes — 22 November 2026
+
+- Native Streamlit Light/Dark configuration covers controls, dialogs and canvas tables. Session-local palettes cover KPI cards, insights, charts and download buttons.
+- Chromium verified dark chart background/text/series colours and matching light palette.
+- P&L CSV bytes are identical across modes for the same reporting period. A 2025 filter remained selected through a mode change and its CSV bytes stayed identical.
+- The chosen Light preference survived a full reload. A separate browser context retained Dark independently.
+- Both modes passed the 390 × 844 mobile layout/download visibility check. No browser pageerror events or Streamlit exception element were observed in the passing run.
+- Six financial unittests passed again. The financial calculation module and bundled data are unchanged.
+- Representative text/background, accent and button-label pairs in both custom palettes have calculated contrast ratios of at least 4.5:1. This is not a full accessibility certification.
+- Native appearance changes do not themselves rerun all Python content. A one-second `st.fragment` detects a changed session theme and requests one full rerun; the stable mode runs only the lightweight check.
+- Dark remains the configured base; System mode follows the visitor's device preference, and explicit choices are remembered by Streamlit in that browser.
+- Screenshot capture was repeated after waiting for chart/table rendering to settle.
+
+## Publication
+
+The owner approved GitHub publication and deployment. The target repository is `michael-adebayo256/finance-performance-dashboard`, branch `main`, entrypoint `app.py`. Authenticated Community Cloud deployment tools are not available in this session; the signed-in browser deployment step and public-app verification remain pending.

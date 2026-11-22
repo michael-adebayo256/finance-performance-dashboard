@@ -6,29 +6,46 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 from finance import load_data, pnl, monthly_summary, profit_bridge, cash_summary, percent, CATEGORIES
+from themes import PALETTES
 
 BASE = Path(__file__).resolve().parent
-TEAL, BLUE, GOLD, RED = "#4EE1B5", "#79AAFF", "#F3C577", "#FF879A"
 st.set_page_config(page_title="Finance Lens | Performance & Variance", page_icon="◈", layout="wide")
+# Native appearance changes trigger a rerun and stay local to the viewer.
+# No process-wide theme mutation: concurrent viewers can use different modes.
+mode = st.context.theme.type or "dark"
+
+
+@st.fragment(run_every="1s")
+def sync_appearance():
+    """Native theme changes update context on the next fragment request."""
+    if (st.context.theme.type or "dark") != mode:
+        st.rerun()
+
+
+sync_appearance()
+palette = PALETTES[mode]
+TEAL, BLUE, GOLD, RED = (palette[key] for key in ("teal", "blue", "gold", "red"))
+css_variables = ";".join(f"--finance-{key.replace('_', '-')}: {value}" for key, value in palette.items() if key != "template")
+st.markdown("<style>:root {" + css_variables + "}</style>", unsafe_allow_html=True)
 st.markdown('''<style>
-.stApp {background:#0A1220;color:#EDF3FA;}
+.stApp {background:var(--finance-background);color:var(--finance-text);}
 .block-container {max-width:1600px;padding-top:4.5rem;}
-[data-testid="stSidebar"] {background:#101D2E;border-right:1px solid #26374D;}
+[data-testid="stSidebar"] {background:var(--finance-sidebar);border-right:1px solid var(--finance-border);}
 h1,h2,h3 {letter-spacing:-.035em;}
 h1 {font-size:clamp(2rem,3vw,2.9rem)!important;line-height:1.14!important;}
-.eyebrow {color:#4EE1B5;font-size:.85rem;letter-spacing:.14em;font-weight:700;}
-.intro {color:#AFC0D5;font-size:1.05rem;max-width:850px;line-height:1.6;}
-.demo {display:inline-block;padding:.35rem .7rem;border:1px solid #566044;border-radius:6px;color:#F3C577;font-size:.85rem;}
-.metric-card {padding:1.2rem;background:#142236;border:1px solid #2B3D54;border-radius:12px;min-height:160px;margin-bottom:.8rem;}
-.metric-label {color:#B8C8DA;font-size:.95rem;}
+.eyebrow {color:var(--finance-teal);font-size:.85rem;letter-spacing:.14em;font-weight:700;}
+.intro {color:var(--finance-muted);font-size:1.05rem;max-width:850px;line-height:1.6;}
+.demo {display:inline-block;padding:.35rem .7rem;border:1px solid var(--finance-demo-border);border-radius:6px;color:var(--finance-gold);font-size:.85rem;}
+.metric-card {padding:1.2rem;background:var(--finance-surface);border:1px solid var(--finance-border);border-radius:12px;min-height:160px;margin-bottom:.8rem;}
+.metric-label {color:var(--finance-muted);font-size:.95rem;}
 .metric-value {font-size:clamp(1.65rem,2.4vw,2.5rem);font-weight:700;letter-spacing:-.04em;margin:.2rem 0;}
-.metric-detail {font-size:.85rem;line-height:1.5;color:#AFC0D5;}
-.good {color:#4EE1B5;} .bad {color:#FF879A;}
-.insight {padding:1rem 1.2rem;border-left:3px solid #4EE1B5;background:#12283A;border-radius:5px;line-height:1.7;margin-bottom:1rem;}
-[data-testid="stPlotlyChart"] {border:1px solid #26374D;border-radius:12px;overflow:hidden;}
-[data-testid="stDownloadButton"] button {background:#4EE1B5;color:#071921;border:0;font-weight:650;}
-[data-testid="stDownloadButton"] button p {color:#071921;}
-[data-testid="stDownloadButton"] button:focus-visible {outline:3px solid #F3C577;outline-offset:3px;}
+.metric-detail {font-size:.85rem;line-height:1.5;color:var(--finance-muted);}
+.good {color:var(--finance-teal);} .bad {color:var(--finance-red);}
+.insight {padding:1rem 1.2rem;border-left:3px solid var(--finance-teal);background:var(--finance-insight);border-radius:5px;line-height:1.7;margin-bottom:1rem;}
+[data-testid="stPlotlyChart"] {border:1px solid var(--finance-border);border-radius:12px;overflow:hidden;}
+[data-testid="stDownloadButton"] button {background:var(--finance-teal);color:var(--finance-button-text);border:0;font-weight:650;}
+[data-testid="stDownloadButton"] button p {color:var(--finance-button-text);}
+[data-testid="stDownloadButton"] button:focus-visible {outline:3px solid var(--finance-gold);outline-offset:3px;}
 [data-testid="stTabs"] [role="tab"] {font-size:.95rem;}
 @media(max-width:700px) {.block-container {padding:4rem 1rem 1rem;} .metric-card {min-height:130px;}}
 </style>''', unsafe_allow_html=True)
@@ -50,12 +67,12 @@ def money(value, compact=False):
 
 
 def chart(fig, height=360):
-    fig.update_layout(template="plotly_dark", height=height, paper_bgcolor="#142236", plot_bgcolor="#142236",
-                      font=dict(color="#D6E1EE", size=13), margin=dict(l=20, r=22, t=85, b=35),
+    fig.update_layout(template=palette["template"], height=height, paper_bgcolor=palette["surface"], plot_bgcolor=palette["surface"],
+                      font=dict(color=palette["text"], size=13), margin=dict(l=20, r=22, t=85, b=35),
                       title=dict(x=.03, y=.98, xanchor="left", yanchor="top"),
                       legend=dict(orientation="h", y=1.02, x=0, yanchor="bottom", title_text=""), hovermode="closest")
-    fig.update_xaxes(gridcolor="#26374D", zeroline=False)
-    fig.update_yaxes(gridcolor="#26374D", zeroline=False)
+    fig.update_xaxes(gridcolor=palette["grid"], zeroline=False)
+    fig.update_yaxes(gridcolor=palette["grid"], zeroline=False)
     st.plotly_chart(fig, width="stretch", theme=None)
 
 
@@ -86,6 +103,8 @@ with st.sidebar:
     st.caption("January 2025–October 2026. All values are synthetic and generated for this portfolio project.")
     st.caption("Filters apply to every tab. Opening and closing cash use the selected period’s boundaries.")
     st.caption("Created by Michael Adebayo")
+    st.divider()
+    st.caption(f"Appearance: {mode.title()}. Switch in the top-right menu (⋮ → Light / Dark). Streamlit remembers your choice in this browser.")
 
 st.markdown('<div class="eyebrow">FINANCE LENS / PERFORMANCE & VARIANCE</div>', unsafe_allow_html=True)
 st.title("The numbers. The drivers. The decisions.")
@@ -157,7 +176,7 @@ with variance:
     st.subheader("Explain the gap to budget")
     st.caption("Variance = Actual − Budget. For costs, spending above budget is adverse. Profit impact reverses the cost sign so positive always means favourable.")
     labels, values = profit_bridge(statement)
-    fig = go.Figure(go.Waterfall(x=labels, y=values, measure=["absolute"]+["relative"]*len(CATEGORIES)+["total"], increasing=dict(marker_color=TEAL), decreasing=dict(marker_color=RED), totals=dict(marker_color=BLUE), connector=dict(line=dict(color="#56667C"))))
+    fig = go.Figure(go.Waterfall(x=labels, y=values, measure=["absolute"]+["relative"]*len(CATEGORIES)+["total"], increasing=dict(marker_color=TEAL), decreasing=dict(marker_color=RED), totals=dict(marker_color=BLUE), connector=dict(line=dict(color=palette["muted"]))))
     fig.update_layout(title="Budget-to-actual operating profit bridge", yaxis_tickprefix="£")
     chart(fig, 420)
     st.caption("Each category appears once in the bridge. Gross profit and operating-cost subtotals are excluded to avoid double counting.")
