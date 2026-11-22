@@ -1,0 +1,661 @@
+month,business_unit,category,scenario,amount_gbp
+2025-01-01,Consulting,Revenue,Budget,132442.63
+2025-01-01,Consulting,Revenue,Actual,134142.28
+2025-01-01,Consulting,Direct costs,Budget,37083.94
+2025-01-01,Consulting,Direct costs,Actual,40392.8
+2025-01-01,Consulting,People,Budget,46400.0
+2025-01-01,Consulting,People,Actual,47909.4
+2025-01-01,Consulting,Sales & marketing,Budget,8608.77
+2025-01-01,Consulting,Sales & marketing,Actual,9259.56
+2025-01-01,Consulting,Administration,Budget,12325.0
+2025-01-01,Consulting,Administration,Actual,11703.01
+2025-01-01,Managed services,Revenue,Budget,98646.93
+2025-01-01,Managed services,Revenue,Actual,104082.74
+2025-01-01,Managed services,Direct costs,Budget,27621.14
+2025-01-01,Managed services,Direct costs,Actual,26659.51
+2025-01-01,Managed services,People,Budget,34560.0
+2025-01-01,Managed services,People,Actual,35506.26
+2025-01-01,Managed services,Sales & marketing,Budget,6412.05
+2025-01-01,Managed services,Sales & marketing,Actual,5724.97
+2025-01-01,Managed services,Administration,Budget,9180.0
+2025-01-01,Managed services,Administration,Actual,9271.22
+2025-01-01,Training,Revenue,Budget,56630.64
+2025-01-01,Training,Revenue,Actual,56521.95
+2025-01-01,Training,Direct costs,Budget,15856.58
+2025-01-01,Training,Direct costs,Actual,16794.76
+2025-01-01,Training,People,Budget,19840.0
+2025-01-01,Training,People,Actual,20119.13
+2025-01-01,Training,Sales & marketing,Budget,3680.99
+2025-01-01,Training,Sales & marketing,Actual,3538.3
+2025-01-01,Training,Administration,Budget,5270.0
+2025-01-01,Training,Administration,Actual,5263.18
+2025-02-01,Consulting,Revenue,Budget,138852.0
+2025-02-01,Consulting,Revenue,Actual,142941.8
+2025-02-01,Consulting,Direct costs,Budget,38878.56
+2025-02-01,Consulting,Direct costs,Actual,39413.06
+2025-02-01,Consulting,People,Budget,46585.6
+2025-02-01,Consulting,People,Actual,47430.92
+2025-02-01,Consulting,Sales & marketing,Budget,9025.38
+2025-02-01,Consulting,Sales & marketing,Actual,9365.62
+2025-02-01,Consulting,Administration,Budget,12361.97
+2025-02-01,Consulting,Administration,Actual,11868.66
+2025-02-01,Managed services,Revenue,Budget,103420.8
+2025-02-01,Managed services,Revenue,Actual,95671.34
+2025-02-01,Managed services,Direct costs,Budget,28957.82
+2025-02-01,Managed services,Direct costs,Actual,29782.99
+2025-02-01,Managed services,People,Budget,34698.24
+2025-02-01,Managed services,People,Actual,36037.91
+2025-02-01,Managed services,Sales & marketing,Budget,6722.35
+2025-02-01,Managed services,Sales & marketing,Actual,7830.38
+2025-02-01,Managed services,Administration,Budget,9207.54
+2025-02-01,Managed services,Administration,Actual,9193.08
+2025-02-01,Training,Revenue,Budget,59371.2
+2025-02-01,Training,Revenue,Actual,61194.71
+2025-02-01,Training,Direct costs,Budget,16623.94
+2025-02-01,Training,Direct costs,Actual,16893.36
+2025-02-01,Training,People,Budget,19919.36
+2025-02-01,Training,People,Actual,20558.65
+2025-02-01,Training,Sales & marketing,Budget,3859.13
+2025-02-01,Training,Sales & marketing,Actual,3951.89
+2025-02-01,Training,Administration,Budget,5285.81
+2025-02-01,Training,Administration,Actual,4993.87
+2025-03-01,Consulting,Revenue,Budget,147320.0
+2025-03-01,Consulting,Revenue,Actual,157765.47
+2025-03-01,Consulting,Direct costs,Budget,41249.6
+2025-03-01,Consulting,Direct costs,Actual,40095.91
+2025-03-01,Consulting,People,Budget,46771.2
+2025-03-01,Consulting,People,Actual,48267.59
+2025-03-01,Consulting,Sales & marketing,Budget,9575.8
+2025-03-01,Consulting,Sales & marketing,Actual,10067.8
+2025-03-01,Consulting,Administration,Budget,12398.95
+2025-03-01,Consulting,Administration,Actual,12046.1
+2025-03-01,Managed services,Revenue,Budget,109728.0
+2025-03-01,Managed services,Revenue,Actual,112017.32
+2025-03-01,Managed services,Direct costs,Budget,30723.84
+2025-03-01,Managed services,Direct costs,Actual,32034.88
+2025-03-01,Managed services,People,Budget,34836.48
+2025-03-01,Managed services,People,Actual,35326.86
+2025-03-01,Managed services,Sales & marketing,Budget,7132.32
+2025-03-01,Managed services,Sales & marketing,Actual,7946.02
+2025-03-01,Managed services,Administration,Budget,9235.08
+2025-03-01,Managed services,Administration,Actual,8816.79
+2025-03-01,Training,Revenue,Budget,62992.0
+2025-03-01,Training,Revenue,Actual,65713.35
+2025-03-01,Training,Direct costs,Budget,17637.76
+2025-03-01,Training,Direct costs,Actual,17306.08
+2025-03-01,Training,People,Budget,19998.72
+2025-03-01,Training,People,Actual,20052.82
+2025-03-01,Training,Sales & marketing,Budget,4094.48
+2025-03-01,Training,Sales & marketing,Actual,3820.56
+2025-03-01,Training,Administration,Budget,5301.62
+2025-03-01,Training,Administration,Actual,5195.45
+2025-04-01,Consulting,Revenue,Budget,155904.0
+2025-04-01,Consulting,Revenue,Actual,152003.3
+2025-04-01,Consulting,Direct costs,Budget,43653.12
+2025-04-01,Consulting,Direct costs,Actual,47360.31
+2025-04-01,Consulting,People,Budget,46956.8
+2025-04-01,Consulting,People,Actual,48224.38
+2025-04-01,Consulting,Sales & marketing,Budget,10133.76
+2025-04-01,Consulting,Sales & marketing,Actual,10363.52
+2025-04-01,Consulting,Administration,Budget,12435.92
+2025-04-01,Consulting,Administration,Actual,11915.96
+2025-04-01,Managed services,Revenue,Budget,116121.6
+2025-04-01,Managed services,Revenue,Actual,110846.0
+2025-04-01,Managed services,Direct costs,Budget,32514.05
+2025-04-01,Managed services,Direct costs,Actual,32358.66
+2025-04-01,Managed services,People,Budget,34974.72
+2025-04-01,Managed services,People,Actual,35149.83
+2025-04-01,Managed services,Sales & marketing,Budget,7547.9
+2025-04-01,Managed services,Sales & marketing,Actual,8001.29
+2025-04-01,Managed services,Administration,Budget,9262.62
+2025-04-01,Managed services,Administration,Actual,9386.55
+2025-04-01,Training,Revenue,Budget,66662.4
+2025-04-01,Training,Revenue,Actual,68710.44
+2025-04-01,Training,Direct costs,Budget,18665.47
+2025-04-01,Training,Direct costs,Actual,18703.93
+2025-04-01,Training,People,Budget,20078.08
+2025-04-01,Training,People,Actual,20527.4
+2025-04-01,Training,Sales & marketing,Budget,4333.06
+2025-04-01,Training,Sales & marketing,Actual,4570.25
+2025-04-01,Training,Administration,Budget,5317.43
+2025-04-01,Training,Administration,Actual,5208.37
+2025-05-01,Consulting,Revenue,Budget,162599.2
+2025-05-01,Consulting,Revenue,Actual,164400.13
+2025-05-01,Consulting,Direct costs,Budget,45527.78
+2025-05-01,Consulting,Direct costs,Actual,45166.2
+2025-05-01,Consulting,People,Budget,47142.4
+2025-05-01,Consulting,People,Actual,47015.31
+2025-05-01,Consulting,Sales & marketing,Budget,10568.95
+2025-05-01,Consulting,Sales & marketing,Actual,12110.22
+2025-05-01,Consulting,Administration,Budget,12472.9
+2025-05-01,Consulting,Administration,Actual,12014.6
+2025-05-01,Managed services,Revenue,Budget,121108.37
+2025-05-01,Managed services,Revenue,Actual,122445.74
+2025-05-01,Managed services,Direct costs,Budget,33910.34
+2025-05-01,Managed services,Direct costs,Actual,33542.08
+2025-05-01,Managed services,People,Budget,35112.96
+2025-05-01,Managed services,People,Actual,35759.69
+2025-05-01,Managed services,Sales & marketing,Budget,7872.04
+2025-05-01,Managed services,Sales & marketing,Actual,8691.72
+2025-05-01,Managed services,Administration,Budget,9290.16
+2025-05-01,Managed services,Administration,Actual,9118.01
+2025-05-01,Training,Revenue,Budget,69525.18
+2025-05-01,Training,Revenue,Actual,70170.72
+2025-05-01,Training,Direct costs,Budget,19467.05
+2025-05-01,Training,Direct costs,Actual,19728.68
+2025-05-01,Training,People,Budget,20157.44
+2025-05-01,Training,People,Actual,20539.85
+2025-05-01,Training,Sales & marketing,Budget,4519.14
+2025-05-01,Training,Sales & marketing,Actual,4753.56
+2025-05-01,Training,Administration,Budget,5333.24
+2025-05-01,Training,Administration,Actual,5454.18
+2025-06-01,Consulting,Revenue,Budget,165880.0
+2025-06-01,Consulting,Revenue,Actual,159731.23
+2025-06-01,Consulting,Direct costs,Budget,46446.4
+2025-06-01,Consulting,Direct costs,Actual,49281.36
+2025-06-01,Consulting,People,Budget,47328.0
+2025-06-01,Consulting,People,Actual,46175.46
+2025-06-01,Consulting,Sales & marketing,Budget,10782.2
+2025-06-01,Consulting,Sales & marketing,Actual,11146.73
+2025-06-01,Consulting,Administration,Budget,12509.87
+2025-06-01,Consulting,Administration,Actual,12242.36
+2025-06-01,Managed services,Revenue,Budget,123552.0
+2025-06-01,Managed services,Revenue,Actual,122801.83
+2025-06-01,Managed services,Direct costs,Budget,34594.56
+2025-06-01,Managed services,Direct costs,Actual,33443.87
+2025-06-01,Managed services,People,Budget,35251.2
+2025-06-01,Managed services,People,Actual,35543.73
+2025-06-01,Managed services,Sales & marketing,Budget,8030.88
+2025-06-01,Managed services,Sales & marketing,Actual,8024.39
+2025-06-01,Managed services,Administration,Budget,9317.7
+2025-06-01,Managed services,Administration,Actual,8752.32
+2025-06-01,Training,Revenue,Budget,70928.0
+2025-06-01,Training,Revenue,Actual,70149.75
+2025-06-01,Training,Direct costs,Budget,19859.84
+2025-06-01,Training,Direct costs,Actual,20798.23
+2025-06-01,Training,People,Budget,20236.8
+2025-06-01,Training,People,Actual,20600.85
+2025-06-01,Training,Sales & marketing,Budget,4610.32
+2025-06-01,Training,Sales & marketing,Actual,4861.03
+2025-06-01,Training,Administration,Budget,5349.05
+2025-06-01,Training,Administration,Actual,5239.57
+2025-07-01,Consulting,Revenue,Budget,165120.12
+2025-07-01,Consulting,Revenue,Actual,167093.05
+2025-07-01,Consulting,Direct costs,Budget,46233.63
+2025-07-01,Consulting,Direct costs,Actual,46474.21
+2025-07-01,Consulting,People,Budget,47513.6
+2025-07-01,Consulting,People,Actual,48103.91
+2025-07-01,Consulting,Sales & marketing,Budget,10732.81
+2025-07-01,Consulting,Sales & marketing,Actual,11786.01
+2025-07-01,Consulting,Administration,Budget,12546.85
+2025-07-01,Consulting,Administration,Actual,12048.37
+2025-07-01,Managed services,Revenue,Budget,122986.02
+2025-07-01,Managed services,Revenue,Actual,127380.52
+2025-07-01,Managed services,Direct costs,Budget,34436.09
+2025-07-01,Managed services,Direct costs,Actual,35081.87
+2025-07-01,Managed services,People,Budget,35389.44
+2025-07-01,Managed services,People,Actual,35348.94
+2025-07-01,Managed services,Sales & marketing,Budget,7994.09
+2025-07-01,Managed services,Sales & marketing,Actual,9455.8
+2025-07-01,Managed services,Administration,Budget,9345.24
+2025-07-01,Managed services,Administration,Actual,9388.06
+2025-07-01,Training,Revenue,Budget,70603.09
+2025-07-01,Training,Revenue,Actual,63598.33
+2025-07-01,Training,Direct costs,Budget,19768.86
+2025-07-01,Training,Direct costs,Actual,19425.83
+2025-07-01,Training,People,Budget,20316.16
+2025-07-01,Training,People,Actual,20578.23
+2025-07-01,Training,Sales & marketing,Budget,4589.2
+2025-07-01,Training,Sales & marketing,Actual,5152.86
+2025-07-01,Training,Administration,Budget,5364.86
+2025-07-01,Training,Administration,Actual,5361.18
+2025-08-01,Consulting,Revenue,Budget,160776.0
+2025-08-01,Consulting,Revenue,Actual,159585.57
+2025-08-01,Consulting,Direct costs,Budget,45017.28
+2025-08-01,Consulting,Direct costs,Actual,47926.94
+2025-08-01,Consulting,People,Budget,47699.2
+2025-08-01,Consulting,People,Actual,49384.76
+2025-08-01,Consulting,Sales & marketing,Budget,10450.44
+2025-08-01,Consulting,Sales & marketing,Actual,11396.23
+2025-08-01,Consulting,Administration,Budget,12583.82
+2025-08-01,Consulting,Administration,Actual,12579.59
+2025-08-01,Managed services,Revenue,Budget,119750.4
+2025-08-01,Managed services,Revenue,Actual,120179.12
+2025-08-01,Managed services,Direct costs,Budget,33530.11
+2025-08-01,Managed services,Direct costs,Actual,35507.15
+2025-08-01,Managed services,People,Budget,35527.68
+2025-08-01,Managed services,People,Actual,35387.21
+2025-08-01,Managed services,Sales & marketing,Budget,7783.78
+2025-08-01,Managed services,Sales & marketing,Actual,8215.61
+2025-08-01,Managed services,Administration,Budget,9372.78
+2025-08-01,Managed services,Administration,Actual,9340.54
+2025-08-01,Training,Revenue,Budget,68745.6
+2025-08-01,Training,Revenue,Actual,71680.49
+2025-08-01,Training,Direct costs,Budget,19248.77
+2025-08-01,Training,Direct costs,Actual,20434.09
+2025-08-01,Training,People,Budget,20395.52
+2025-08-01,Training,People,Actual,20768.94
+2025-08-01,Training,Sales & marketing,Budget,4468.46
+2025-08-01,Training,Sales & marketing,Actual,4504.2
+2025-08-01,Training,Administration,Budget,5380.67
+2025-08-01,Training,Administration,Actual,5223.46
+2025-09-01,Consulting,Revenue,Budget,154280.0
+2025-09-01,Consulting,Revenue,Actual,148754.68
+2025-09-01,Consulting,Direct costs,Budget,43198.4
+2025-09-01,Consulting,Direct costs,Actual,44074.9
+2025-09-01,Consulting,People,Budget,47884.8
+2025-09-01,Consulting,People,Actual,47817.95
+2025-09-01,Consulting,Sales & marketing,Budget,10028.2
+2025-09-01,Consulting,Sales & marketing,Actual,10443.97
+2025-09-01,Consulting,Administration,Budget,12620.8
+2025-09-01,Consulting,Administration,Actual,12348.88
+2025-09-01,Managed services,Revenue,Budget,114912.0
+2025-09-01,Managed services,Revenue,Actual,116046.56
+2025-09-01,Managed services,Direct costs,Budget,32175.36
+2025-09-01,Managed services,Direct costs,Actual,33276.08
+2025-09-01,Managed services,People,Budget,35665.92
+2025-09-01,Managed services,People,Actual,36822.87
+2025-09-01,Managed services,Sales & marketing,Budget,7469.28
+2025-09-01,Managed services,Sales & marketing,Actual,7881.28
+2025-09-01,Managed services,Administration,Budget,9400.32
+2025-09-01,Managed services,Administration,Actual,8705.21
+2025-09-01,Training,Revenue,Budget,65968.0
+2025-09-01,Training,Revenue,Actual,64091.94
+2025-09-01,Training,Direct costs,Budget,18471.04
+2025-09-01,Training,Direct costs,Actual,19967.08
+2025-09-01,Training,People,Budget,20474.88
+2025-09-01,Training,People,Actual,20950.75
+2025-09-01,Training,Sales & marketing,Budget,4287.92
+2025-09-01,Training,Sales & marketing,Actual,4573.07
+2025-09-01,Training,Administration,Budget,5396.48
+2025-09-01,Training,Administration,Actual,5176.56
+2025-10-01,Consulting,Revenue,Budget,147668.0
+2025-10-01,Consulting,Revenue,Actual,154898.02
+2025-10-01,Consulting,Direct costs,Budget,41347.04
+2025-10-01,Consulting,Direct costs,Actual,42715.39
+2025-10-01,Consulting,People,Budget,48070.4
+2025-10-01,Consulting,People,Actual,49201.15
+2025-10-01,Consulting,Sales & marketing,Budget,9598.42
+2025-10-01,Consulting,Sales & marketing,Actual,10125.58
+2025-10-01,Consulting,Administration,Budget,12657.77
+2025-10-01,Consulting,Administration,Actual,12250.52
+2025-10-01,Managed services,Revenue,Budget,109987.2
+2025-10-01,Managed services,Revenue,Actual,114731.52
+2025-10-01,Managed services,Direct costs,Budget,30796.42
+2025-10-01,Managed services,Direct costs,Actual,31841.91
+2025-10-01,Managed services,People,Budget,35804.16
+2025-10-01,Managed services,People,Actual,35815.72
+2025-10-01,Managed services,Sales & marketing,Budget,7149.17
+2025-10-01,Managed services,Sales & marketing,Actual,8855.41
+2025-10-01,Managed services,Administration,Budget,9427.86
+2025-10-01,Managed services,Administration,Actual,9263.21
+2025-10-01,Training,Revenue,Budget,63140.8
+2025-10-01,Training,Revenue,Actual,63559.19
+2025-10-01,Training,Direct costs,Budget,17679.42
+2025-10-01,Training,Direct costs,Actual,19007.08
+2025-10-01,Training,People,Budget,20554.24
+2025-10-01,Training,People,Actual,20997.84
+2025-10-01,Training,Sales & marketing,Budget,4104.15
+2025-10-01,Training,Sales & marketing,Actual,4139.05
+2025-10-01,Training,Administration,Budget,5412.29
+2025-10-01,Training,Administration,Actual,5536.56
+2025-11-01,Consulting,Revenue,Budget,143038.04
+2025-11-01,Consulting,Revenue,Actual,157456.1
+2025-11-01,Consulting,Direct costs,Budget,40050.65
+2025-11-01,Consulting,Direct costs,Actual,42263.07
+2025-11-01,Consulting,People,Budget,48256.0
+2025-11-01,Consulting,People,Actual,48616.4
+2025-11-01,Consulting,Sales & marketing,Budget,9297.47
+2025-11-01,Consulting,Sales & marketing,Actual,9944.54
+2025-11-01,Consulting,Administration,Budget,12694.75
+2025-11-01,Consulting,Administration,Actual,12425.68
+2025-11-01,Managed services,Revenue,Budget,106538.68
+2025-11-01,Managed services,Revenue,Actual,110015.21
+2025-11-01,Managed services,Direct costs,Budget,29830.83
+2025-11-01,Managed services,Direct costs,Actual,31900.68
+2025-11-01,Managed services,People,Budget,35942.4
+2025-11-01,Managed services,People,Actual,36604.25
+2025-11-01,Managed services,Sales & marketing,Budget,6925.01
+2025-11-01,Managed services,Sales & marketing,Actual,7178.15
+2025-11-01,Managed services,Administration,Budget,9455.4
+2025-11-01,Managed services,Administration,Actual,9525.91
+2025-11-01,Training,Revenue,Budget,61161.09
+2025-11-01,Training,Revenue,Actual,56449.67
+2025-11-01,Training,Direct costs,Budget,17125.11
+2025-11-01,Training,Direct costs,Actual,18068.53
+2025-11-01,Training,People,Budget,20633.6
+2025-11-01,Training,People,Actual,20522.19
+2025-11-01,Training,Sales & marketing,Budget,3975.47
+2025-11-01,Training,Sales & marketing,Actual,4039.69
+2025-11-01,Training,Administration,Budget,5428.1
+2025-11-01,Training,Administration,Actual,5384.53
+2025-12-01,Consulting,Revenue,Budget,141984.0
+2025-12-01,Consulting,Revenue,Actual,140084.42
+2025-12-01,Consulting,Direct costs,Budget,39755.52
+2025-12-01,Consulting,Direct costs,Actual,41774.12
+2025-12-01,Consulting,People,Budget,48441.6
+2025-12-01,Consulting,People,Actual,48722.98
+2025-12-01,Consulting,Sales & marketing,Budget,9228.96
+2025-12-01,Consulting,Sales & marketing,Actual,8884.45
+2025-12-01,Consulting,Administration,Budget,12731.72
+2025-12-01,Consulting,Administration,Actual,12394.75
+2025-12-01,Managed services,Revenue,Budget,105753.6
+2025-12-01,Managed services,Revenue,Actual,105796.68
+2025-12-01,Managed services,Direct costs,Budget,29611.01
+2025-12-01,Managed services,Direct costs,Actual,31358.46
+2025-12-01,Managed services,People,Budget,36080.64
+2025-12-01,Managed services,People,Actual,36376.0
+2025-12-01,Managed services,Sales & marketing,Budget,6873.98
+2025-12-01,Managed services,Sales & marketing,Actual,6863.38
+2025-12-01,Managed services,Administration,Budget,9482.94
+2025-12-01,Managed services,Administration,Actual,9548.76
+2025-12-01,Training,Revenue,Budget,60710.4
+2025-12-01,Training,Revenue,Actual,60839.96
+2025-12-01,Training,Direct costs,Budget,16998.91
+2025-12-01,Training,Direct costs,Actual,17500.47
+2025-12-01,Training,People,Budget,20712.96
+2025-12-01,Training,People,Actual,20593.13
+2025-12-01,Training,Sales & marketing,Budget,3946.18
+2025-12-01,Training,Sales & marketing,Actual,4446.05
+2025-12-01,Training,Administration,Budget,5443.91
+2025-12-01,Training,Administration,Actual,5459.81
+2026-01-01,Consulting,Revenue,Budget,145157.12
+2026-01-01,Consulting,Revenue,Actual,150891.77
+2026-01-01,Consulting,Direct costs,Budget,40643.99
+2026-01-01,Consulting,Direct costs,Actual,41128.15
+2026-01-01,Consulting,People,Budget,48627.2
+2026-01-01,Consulting,People,Actual,48835.34
+2026-01-01,Consulting,Sales & marketing,Budget,9435.21
+2026-01-01,Consulting,Sales & marketing,Actual,10692.48
+2026-01-01,Consulting,Administration,Budget,12768.7
+2026-01-01,Consulting,Administration,Actual,12434.36
+2026-01-01,Managed services,Revenue,Budget,108117.03
+2026-01-01,Managed services,Revenue,Actual,106808.48
+2026-01-01,Managed services,Direct costs,Budget,30272.77
+2026-01-01,Managed services,Direct costs,Actual,32297.99
+2026-01-01,Managed services,People,Budget,36218.88
+2026-01-01,Managed services,People,Actual,36900.24
+2026-01-01,Managed services,Sales & marketing,Budget,7027.61
+2026-01-01,Managed services,Sales & marketing,Actual,7210.48
+2026-01-01,Managed services,Administration,Budget,9510.48
+2026-01-01,Managed services,Administration,Actual,9089.67
+2026-01-01,Training,Revenue,Budget,62067.18
+2026-01-01,Training,Revenue,Actual,52061.49
+2026-01-01,Training,Direct costs,Budget,17378.81
+2026-01-01,Training,Direct costs,Actual,15629.98
+2026-01-01,Training,People,Budget,20792.32
+2026-01-01,Training,People,Actual,21379.95
+2026-01-01,Training,Sales & marketing,Budget,4034.37
+2026-01-01,Training,Sales & marketing,Actual,4499.43
+2026-01-01,Training,Administration,Budget,5459.72
+2026-01-01,Training,Administration,Actual,5396.25
+2026-02-01,Consulting,Revenue,Budget,152076.0
+2026-02-01,Consulting,Revenue,Actual,163435.17
+2026-02-01,Consulting,Direct costs,Budget,42581.28
+2026-02-01,Consulting,Direct costs,Actual,43397.58
+2026-02-01,Consulting,People,Budget,48812.8
+2026-02-01,Consulting,People,Actual,50452.23
+2026-02-01,Consulting,Sales & marketing,Budget,9884.94
+2026-02-01,Consulting,Sales & marketing,Actual,10132.94
+2026-02-01,Consulting,Administration,Budget,12805.67
+2026-02-01,Consulting,Administration,Actual,12927.99
+2026-02-01,Managed services,Revenue,Budget,113270.4
+2026-02-01,Managed services,Revenue,Actual,129286.45
+2026-02-01,Managed services,Direct costs,Budget,31715.71
+2026-02-01,Managed services,Direct costs,Actual,33857.4
+2026-02-01,Managed services,People,Budget,36357.12
+2026-02-01,Managed services,People,Actual,36188.31
+2026-02-01,Managed services,Sales & marketing,Budget,7362.58
+2026-02-01,Managed services,Sales & marketing,Actual,7599.81
+2026-02-01,Managed services,Administration,Budget,9538.02
+2026-02-01,Managed services,Administration,Actual,9729.62
+2026-02-01,Training,Revenue,Budget,65025.6
+2026-02-01,Training,Revenue,Actual,59792.14
+2026-02-01,Training,Direct costs,Budget,18207.17
+2026-02-01,Training,Direct costs,Actual,18089.39
+2026-02-01,Training,People,Budget,20871.68
+2026-02-01,Training,People,Actual,21264.06
+2026-02-01,Training,Sales & marketing,Budget,4226.66
+2026-02-01,Training,Sales & marketing,Actual,4557.76
+2026-02-01,Training,Administration,Budget,5475.53
+2026-02-01,Training,Administration,Actual,5407.04
+2026-03-01,Consulting,Revenue,Budget,161240.0
+2026-03-01,Consulting,Revenue,Actual,163389.85
+2026-03-01,Consulting,Direct costs,Budget,45147.2
+2026-03-01,Consulting,Direct costs,Actual,46648.51
+2026-03-01,Consulting,People,Budget,48998.4
+2026-03-01,Consulting,People,Actual,48425.57
+2026-03-01,Consulting,Sales & marketing,Budget,10480.6
+2026-03-01,Consulting,Sales & marketing,Actual,10543.11
+2026-03-01,Consulting,Administration,Budget,12842.65
+2026-03-01,Consulting,Administration,Actual,12570.21
+2026-03-01,Managed services,Revenue,Budget,120096.0
+2026-03-01,Managed services,Revenue,Actual,112589.22
+2026-03-01,Managed services,Direct costs,Budget,33626.88
+2026-03-01,Managed services,Direct costs,Actual,36767.06
+2026-03-01,Managed services,People,Budget,36495.36
+2026-03-01,Managed services,People,Actual,36696.84
+2026-03-01,Managed services,Sales & marketing,Budget,7806.24
+2026-03-01,Managed services,Sales & marketing,Actual,7783.7
+2026-03-01,Managed services,Administration,Budget,9565.56
+2026-03-01,Managed services,Administration,Actual,9239.55
+2026-03-01,Training,Revenue,Budget,68944.0
+2026-03-01,Training,Revenue,Actual,60408.1
+2026-03-01,Training,Direct costs,Budget,19304.32
+2026-03-01,Training,Direct costs,Actual,19785.99
+2026-03-01,Training,People,Budget,20951.04
+2026-03-01,Training,People,Actual,21729.12
+2026-03-01,Training,Sales & marketing,Budget,4481.36
+2026-03-01,Training,Sales & marketing,Actual,4833.1
+2026-03-01,Training,Administration,Budget,5491.34
+2026-03-01,Training,Administration,Actual,5045.89
+2026-04-01,Consulting,Revenue,Budget,170520.0
+2026-04-01,Consulting,Revenue,Actual,183760.91
+2026-04-01,Consulting,Direct costs,Budget,47745.6
+2026-04-01,Consulting,Direct costs,Actual,48054.38
+2026-04-01,Consulting,People,Budget,49184.0
+2026-04-01,Consulting,People,Actual,50233.98
+2026-04-01,Consulting,Sales & marketing,Budget,11083.8
+2026-04-01,Consulting,Sales & marketing,Actual,11615.71
+2026-04-01,Consulting,Administration,Budget,12879.62
+2026-04-01,Consulting,Administration,Actual,12537.33
+2026-04-01,Managed services,Revenue,Budget,127008.0
+2026-04-01,Managed services,Revenue,Actual,132740.16
+2026-04-01,Managed services,Direct costs,Budget,35562.24
+2026-04-01,Managed services,Direct costs,Actual,35199.23
+2026-04-01,Managed services,People,Budget,36633.6
+2026-04-01,Managed services,People,Actual,37522.73
+2026-04-01,Managed services,Sales & marketing,Budget,8255.52
+2026-04-01,Managed services,Sales & marketing,Actual,8580.34
+2026-04-01,Managed services,Administration,Budget,9593.1
+2026-04-01,Managed services,Administration,Actual,9757.41
+2026-04-01,Training,Revenue,Budget,72912.0
+2026-04-01,Training,Revenue,Actual,66965.84
+2026-04-01,Training,Direct costs,Budget,20415.36
+2026-04-01,Training,Direct costs,Actual,20217.42
+2026-04-01,Training,People,Budget,21030.4
+2026-04-01,Training,People,Actual,21763.63
+2026-04-01,Training,Sales & marketing,Budget,4739.28
+2026-04-01,Training,Sales & marketing,Actual,4991.93
+2026-04-01,Training,Administration,Budget,5507.15
+2026-04-01,Training,Administration,Actual,5408.8
+2026-05-01,Consulting,Revenue,Budget,177724.71
+2026-05-01,Consulting,Revenue,Actual,167855.22
+2026-05-01,Consulting,Direct costs,Budget,49762.92
+2026-05-01,Consulting,Direct costs,Actual,52177.18
+2026-05-01,Consulting,People,Budget,49369.6
+2026-05-01,Consulting,People,Actual,49805.74
+2026-05-01,Consulting,Sales & marketing,Budget,11552.11
+2026-05-01,Consulting,Sales & marketing,Actual,13108.09
+2026-05-01,Consulting,Administration,Budget,12916.6
+2026-05-01,Consulting,Administration,Actual,12897.23
+2026-05-01,Managed services,Revenue,Budget,132374.27
+2026-05-01,Managed services,Revenue,Actual,134222.34
+2026-05-01,Managed services,Direct costs,Budget,37064.8
+2026-05-01,Managed services,Direct costs,Actual,37745.81
+2026-05-01,Managed services,People,Budget,36771.84
+2026-05-01,Managed services,People,Actual,37544.42
+2026-05-01,Managed services,Sales & marketing,Budget,8604.33
+2026-05-01,Managed services,Sales & marketing,Actual,9411.85
+2026-05-01,Managed services,Administration,Budget,9620.64
+2026-05-01,Managed services,Administration,Actual,9521.96
+2026-05-01,Training,Revenue,Budget,75992.64
+2026-05-01,Training,Revenue,Actual,70924.77
+2026-05-01,Training,Direct costs,Budget,21277.94
+2026-05-01,Training,Direct costs,Actual,22182.05
+2026-05-01,Training,People,Budget,21109.76
+2026-05-01,Training,People,Actual,21102.15
+2026-05-01,Training,Sales & marketing,Budget,4939.52
+2026-05-01,Training,Sales & marketing,Actual,5630.25
+2026-05-01,Training,Administration,Budget,5522.96
+2026-05-01,Training,Administration,Actual,5611.62
+2026-06-01,Consulting,Revenue,Budget,181192.0
+2026-06-01,Consulting,Revenue,Actual,184574.26
+2026-06-01,Consulting,Direct costs,Budget,50733.76
+2026-06-01,Consulting,Direct costs,Actual,50656.15
+2026-06-01,Consulting,People,Budget,49555.2
+2026-06-01,Consulting,People,Actual,49913.95
+2026-06-01,Consulting,Sales & marketing,Budget,11777.48
+2026-06-01,Consulting,Sales & marketing,Actual,13927.22
+2026-06-01,Consulting,Administration,Budget,12953.57
+2026-06-01,Consulting,Administration,Actual,12597.73
+2026-06-01,Managed services,Revenue,Budget,134956.8
+2026-06-01,Managed services,Revenue,Actual,126743.57
+2026-06-01,Managed services,Direct costs,Budget,37787.9
+2026-06-01,Managed services,Direct costs,Actual,38982.51
+2026-06-01,Managed services,People,Budget,36910.08
+2026-06-01,Managed services,People,Actual,37274.8
+2026-06-01,Managed services,Sales & marketing,Budget,8772.19
+2026-06-01,Managed services,Sales & marketing,Actual,9136.93
+2026-06-01,Managed services,Administration,Budget,9648.18
+2026-06-01,Managed services,Administration,Actual,9356.97
+2026-06-01,Training,Revenue,Budget,77475.2
+2026-06-01,Training,Revenue,Actual,69034.34
+2026-06-01,Training,Direct costs,Budget,21693.06
+2026-06-01,Training,Direct costs,Actual,22587.83
+2026-06-01,Training,People,Budget,21189.12
+2026-06-01,Training,People,Actual,21440.3
+2026-06-01,Training,Sales & marketing,Budget,5035.89
+2026-06-01,Training,Sales & marketing,Actual,5371.52
+2026-06-01,Training,Administration,Budget,5538.77
+2026-06-01,Training,Administration,Actual,5554.78
+2026-07-01,Consulting,Revenue,Budget,180245.63
+2026-07-01,Consulting,Revenue,Actual,182452.39
+2026-07-01,Consulting,Direct costs,Budget,50468.78
+2026-07-01,Consulting,Direct costs,Actual,50582.23
+2026-07-01,Consulting,People,Budget,49740.8
+2026-07-01,Consulting,People,Actual,51605.04
+2026-07-01,Consulting,Sales & marketing,Budget,11715.97
+2026-07-01,Consulting,Sales & marketing,Actual,10828.23
+2026-07-01,Consulting,Administration,Budget,12990.55
+2026-07-01,Consulting,Administration,Actual,12653.64
+2026-07-01,Managed services,Revenue,Budget,134251.92
+2026-07-01,Managed services,Revenue,Actual,132529.76
+2026-07-01,Managed services,Direct costs,Budget,37590.54
+2026-07-01,Managed services,Direct costs,Actual,37408.63
+2026-07-01,Managed services,People,Budget,37048.32
+2026-07-01,Managed services,People,Actual,37350.5
+2026-07-01,Managed services,Sales & marketing,Budget,8726.37
+2026-07-01,Managed services,Sales & marketing,Actual,9039.3
+2026-07-01,Managed services,Administration,Budget,9675.72
+2026-07-01,Managed services,Administration,Actual,9772.74
+2026-07-01,Training,Revenue,Budget,77070.54
+2026-07-01,Training,Revenue,Actual,70036.1
+2026-07-01,Training,Direct costs,Budget,21579.75
+2026-07-01,Training,Direct costs,Actual,20573.88
+2026-07-01,Training,People,Budget,21268.48
+2026-07-01,Training,People,Actual,21735.4
+2026-07-01,Training,Sales & marketing,Budget,5009.59
+2026-07-01,Training,Sales & marketing,Actual,5735.98
+2026-07-01,Training,Administration,Budget,5554.58
+2026-07-01,Training,Administration,Actual,5473.06
+2026-08-01,Consulting,Revenue,Budget,175392.0
+2026-08-01,Consulting,Revenue,Actual,176511.86
+2026-08-01,Consulting,Direct costs,Budget,49109.76
+2026-08-01,Consulting,Direct costs,Actual,51691.11
+2026-08-01,Consulting,People,Budget,49926.4
+2026-08-01,Consulting,People,Actual,52568.75
+2026-08-01,Consulting,Sales & marketing,Budget,11400.48
+2026-08-01,Consulting,Sales & marketing,Actual,12632.1
+2026-08-01,Consulting,Administration,Budget,13027.52
+2026-08-01,Consulting,Administration,Actual,12985.84
+2026-08-01,Managed services,Revenue,Budget,130636.8
+2026-08-01,Managed services,Revenue,Actual,134931.83
+2026-08-01,Managed services,Direct costs,Budget,36578.3
+2026-08-01,Managed services,Direct costs,Actual,36958.03
+2026-08-01,Managed services,People,Budget,37186.56
+2026-08-01,Managed services,People,Actual,38250.7
+2026-08-01,Managed services,Sales & marketing,Budget,8491.39
+2026-08-01,Managed services,Sales & marketing,Actual,9238.87
+2026-08-01,Managed services,Administration,Budget,9703.26
+2026-08-01,Managed services,Administration,Actual,9072.76
+2026-08-01,Training,Revenue,Budget,74995.2
+2026-08-01,Training,Revenue,Actual,68626.61
+2026-08-01,Training,Direct costs,Budget,20998.66
+2026-08-01,Training,Direct costs,Actual,22007.2
+2026-08-01,Training,People,Budget,21347.84
+2026-08-01,Training,People,Actual,21609.74
+2026-08-01,Training,Sales & marketing,Budget,4874.69
+2026-08-01,Training,Sales & marketing,Actual,5292.78
+2026-08-01,Training,Administration,Budget,5570.39
+2026-08-01,Training,Administration,Actual,5622.38
+2026-09-01,Consulting,Revenue,Budget,168200.0
+2026-09-01,Consulting,Revenue,Actual,168959.09
+2026-09-01,Consulting,Direct costs,Budget,47096.0
+2026-09-01,Consulting,Direct costs,Actual,48639.72
+2026-09-01,Consulting,People,Budget,50112.0
+2026-09-01,Consulting,People,Actual,50576.24
+2026-09-01,Consulting,Sales & marketing,Budget,10933.0
+2026-09-01,Consulting,Sales & marketing,Actual,11238.94
+2026-09-01,Consulting,Administration,Budget,13064.5
+2026-09-01,Consulting,Administration,Actual,12988.62
+2026-09-01,Managed services,Revenue,Budget,125280.0
+2026-09-01,Managed services,Revenue,Actual,123742.03
+2026-09-01,Managed services,Direct costs,Budget,35078.4
+2026-09-01,Managed services,Direct costs,Actual,35702.7
+2026-09-01,Managed services,People,Budget,37324.8
+2026-09-01,Managed services,People,Actual,37623.4
+2026-09-01,Managed services,Sales & marketing,Budget,8143.2
+2026-09-01,Managed services,Sales & marketing,Actual,8861.68
+2026-09-01,Managed services,Administration,Budget,9730.8
+2026-09-01,Managed services,Administration,Actual,9688.87
+2026-09-01,Training,Revenue,Budget,71920.0
+2026-09-01,Training,Revenue,Actual,66747.17
+2026-09-01,Training,Direct costs,Budget,20137.6
+2026-09-01,Training,Direct costs,Actual,21830.33
+2026-09-01,Training,People,Budget,21427.2
+2026-09-01,Training,People,Actual,21395.3
+2026-09-01,Training,Sales & marketing,Budget,4674.8
+2026-09-01,Training,Sales & marketing,Actual,4517.64
+2026-09-01,Training,Administration,Budget,5586.2
+2026-09-01,Training,Administration,Actual,5453.63
+2026-10-01,Consulting,Revenue,Budget,160892.0
+2026-10-01,Consulting,Revenue,Actual,163517.18
+2026-10-01,Consulting,Direct costs,Budget,45049.76
+2026-10-01,Consulting,Direct costs,Actual,45187.99
+2026-10-01,Consulting,People,Budget,50297.6
+2026-10-01,Consulting,People,Actual,52044.32
+2026-10-01,Consulting,Sales & marketing,Budget,10457.98
+2026-10-01,Consulting,Sales & marketing,Actual,11391.07
+2026-10-01,Consulting,Administration,Budget,13101.47
+2026-10-01,Consulting,Administration,Actual,12688.62
+2026-10-01,Managed services,Revenue,Budget,119836.8
+2026-10-01,Managed services,Revenue,Actual,131064.37
+2026-10-01,Managed services,Direct costs,Budget,33554.3
+2026-10-01,Managed services,Direct costs,Actual,31335.8
+2026-10-01,Managed services,People,Budget,37463.04
+2026-10-01,Managed services,People,Actual,38163.35
+2026-10-01,Managed services,Sales & marketing,Budget,7789.39
+2026-10-01,Managed services,Sales & marketing,Actual,8243.28
+2026-10-01,Managed services,Administration,Budget,9758.34
+2026-10-01,Managed services,Administration,Actual,9803.77
+2026-10-01,Training,Revenue,Budget,68795.2
+2026-10-01,Training,Revenue,Actual,62940.51
+2026-10-01,Training,Direct costs,Budget,19262.66
+2026-10-01,Training,Direct costs,Actual,19997.48
+2026-10-01,Training,People,Budget,21506.56
+2026-10-01,Training,People,Actual,22106.78
+2026-10-01,Training,Sales & marketing,Budget,4471.69
+2026-10-01,Training,Sales & marketing,Actual,5294.08
+2026-10-01,Training,Administration,Budget,5602.01
+2026-10-01,Training,Administration,Actual,5601.73
