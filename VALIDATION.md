@@ -33,7 +33,7 @@ Executed in headless Chromium against the local app on port 8602:
 
 ## Limits
 
-This is a targeted smoke test, not exhaustive device/accessibility testing. A fresh dependency installation, Community Cloud build and public deployment have not been tested. No cloud credentials, user data upload or external finance integration is required. The dashboard does not contain real financial data, forecasts, a complete balance sheet or statutory accounts.
+This is a targeted smoke test, not exhaustive device/accessibility testing. A fresh dependency installation and private Community Cloud build logs have not been inspected. Public-app browser checks were subsequently completed, as recorded below. No cloud credentials, user data upload or external finance integration is required. The dashboard does not contain real financial data, forecasts, a complete balance sheet or statutory accounts.
 
 ## Light and dark themes — 22 November 2026
 
@@ -50,4 +50,16 @@ This is a targeted smoke test, not exhaustive device/accessibility testing. A fr
 
 ## Publication
 
-The owner approved GitHub publication and deployment. The target repository is `michael-adebayo256/finance-performance-dashboard`, branch `main`, entrypoint `app.py`. Authenticated Community Cloud deployment tools are not available in this session; the signed-in browser deployment step and public-app verification remain pending.
+The owner approved GitHub publication and deployment. The target repository is `michael-adebayo256/finance-performance-dashboard`, branch `main`, entrypoint `app.py`. The owner completed the signed-in Community Cloud deployment and provided the public URL. Subsequent public-app verification is recorded below.
+
+## Public deployment verification — 22 November 2026
+
+URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
+
+- The public dashboard loaded in a fresh Chromium context without signing in.
+- All five tabs opened successfully; charts rendered.
+- Initial KPIs matched the bundled synthetic data: £3.62m revenue, £958k operating profit, 26.5% margin and £2.17m closing cash (rounded display values).
+- Downloaded the actual eight-line P&L CSV and verified actual operating profit of £957,889.72.
+- The data tab displayed 300 ledger records for January–October 2026.
+- No browser pageerror events or final Streamlit exception element were observed.
+- The complete two-theme, filter and mobile checks above were performed locally; this public smoke test did not repeat every combination or inspect private cloud build logs.

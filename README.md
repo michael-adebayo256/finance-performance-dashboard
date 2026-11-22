@@ -4,6 +4,8 @@ A finance analyst portfolio project by **Michael Adebayo**, combining financial 
 
 **All company data, budgets, results and business units are synthetic.** No employer, client or personal financial records are used. The project is a management-reporting demonstration, not a real company case study or an investment analysis.
 
+**Live application:** [Open Finance Lens](https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/)
+
 ## What an analyst can do
 
 - Filter the reporting year, a continuous month range and one or more business units.
@@ -124,7 +126,9 @@ Technologies: Python, Streamlit, Pandas, NumPy and Plotly. Native light and dark
 
 GitHub repository: [michael-adebayo256/finance-performance-dashboard](https://github.com/michael-adebayo256/finance-performance-dashboard). Deployment configuration: branch `main`, entrypoint `app.py`, Python **3.12** and Streamlit Community Cloud. It requires no secrets or database service. All generated data are bundled locally.
 
-Public GitHub publication and deployment were approved by the owner. **Public app URL: pending Community Cloud deployment.**
+**Deployment status: live and browser-verified on 22 November 2026.** [Open Finance Lens](https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/). The public dashboard, five tabs and an actual P&L download were verified; see `VALIDATION.md` for the scope and limitations.
+
+For redeployment:
 
 1. Open https://share.streamlit.io/ and select the `michael-adebayo256` workspace.
 2. Choose **Create app** → **Yup, I have an app**.
