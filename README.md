@@ -21,6 +21,8 @@ The methodology and current data-source status stay visible throughout the exper
 
 ## Upload your data
 
+CSV and Excel upload workflows were verified on the public app on **23 November 2026**, using only synthetic template data.
+
 Choose **Data source → Upload files** in the sidebar. Download the Accounts CSV, Cash CSV or Excel templates from the import panel. Use authorised, anonymised company-level totals; do not include customer, employee, bank-account or other personal identifiers.
 
 1. Upload a **CSV or .xlsx** file. Choose the appropriate Excel sheet when needed.

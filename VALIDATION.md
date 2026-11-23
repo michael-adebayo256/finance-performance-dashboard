@@ -80,3 +80,15 @@ URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
 - All browser fixtures and new screenshots use generated synthetic data. No user financial file is included in this repository.
 
 The preceding public deployment checks refer to the earlier demo release. Public verification of the upload release is recorded separately after the updated build becomes available.
+
+## Public upload verification — 23 November 2026
+
+URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
+
+- Woke the existing app from Streamlit's inactivity sleep screen and waited for the upload-enabled release to load.
+- Downloaded the actual Excel template served by the live app.
+- Uploaded synthetic CSV accounts, validated the preview before applying, and observed £100k revenue, £30k operating profit, 30% margin and Not supplied for closing cash. The cash tab correctly declined to infer cash from a P&L.
+- Downloaded the real eight-line uploaded-data P&L CSV and verified operating profit of £30,000.
+- Cleared the CSV import, uploaded the live Excel template into both file controls, explicitly selected its Accounts/Cash worksheets, validated/applied the pair and observed £60k closing cash.
+- No browser pageerror events or final Streamlit exception element were observed. Explicitly cleared the synthetic uploads at the end of the test.
+- Local two-viewer isolation and mobile checks are recorded above; this public smoke test did not repeat every malformed-input case or inspect private host logs. Only generated synthetic data were uploaded during testing.

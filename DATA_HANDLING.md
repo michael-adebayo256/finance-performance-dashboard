@@ -1,6 +1,6 @@
 # Data handling in Finance Lens
 
-Last updated: 22 November 2026.
+Last updated: 23 November 2026.
 
 ## What this application does
 
