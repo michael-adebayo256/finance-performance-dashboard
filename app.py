@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from finance import load_data, pnl, monthly_summary, profit_bridge, cash_summary, percent, CATEGORIES
 from themes import PALETTES
+from comparisons import period_comparison, review_flags, COMPARISON_BASES, THRESHOLD_RULES
 from imports import export_csv
 from upload_ui import render_import, clear_uploads
 
@@ -87,7 +88,7 @@ def card(label, value, detail, good=None):
 
 
 def download(label, frame, filename, key):
-    st.download_button(label, export_csv(frame), filename, "text/csv", key=key)
+    st.download_button(label, export_csv(frame), filename, "text/csv", key=key, on_click="ignore")
 
 
 with st.sidebar:
@@ -126,6 +127,11 @@ with st.sidebar:
     else:
         start, end = st.select_slider("Reporting period", options=months, value=(months[0], months[-1]), format_func=lambda d:pd.Timestamp(d).strftime("%b"),key="period_"+dataset_id+str(year))
     units = st.multiselect("Business units", sorted(ledger.business_unit.unique()), default=sorted(ledger.business_unit.unique()),key="units_"+dataset_id)
+    with st.expander("Investigation thresholds"):
+        amount_threshold = st.number_input("Pound threshold (£)",min_value=0.0,value=10000.0,step=1000.0,format="%.2f",key="review_gbp")
+        percentage_threshold = st.number_input("Percentage threshold (%)",min_value=0.0,max_value=10000.0,value=5.0,step=1.0,key="review_pct")
+        threshold_rule = st.radio("Flag a nonzero change meeting",THRESHOLD_RULES,key="review_rule")
+        st.caption("Inclusive limits on absolute changes. If a percentage is unavailable, the pound test alone applies under either rule. These are investigation filters, not statutory materiality.")
     st.divider()
     st.markdown("**GBP · Uploaded data**" if is_upload else "**GBP · Fictional data**")
     st.caption("Using validated uploaded totals in this session. Validation does not audit their accuracy." if is_upload else "January 2025–October 2026. All values are synthetic and generated for this portfolio project.")
@@ -140,6 +146,7 @@ if not units:
 selection = ledger[ledger.month.between(start, end) & ledger.business_unit.isin(units)].copy()
 selected_cash = cash[cash.month.between(start, end) & cash.business_unit.isin(units)].copy() if cash is not None else None
 statement = pnl(selection)
+budget_review = review_flags(statement,amount_threshold,percentage_threshold,threshold_rule)
 trend = monthly_summary(selection)
 period = f"{pd.Timestamp(start):%b %Y} – {pd.Timestamp(end):%b %Y}"
 st.caption(f"{period}  /  {len(units)} business unit{'s' if len(units) != 1 else ''}  /  Actual versus original budget")
@@ -161,7 +168,7 @@ with columns[3]:
     else:
         card("Closing cash", money(cash_values["Closing cash"], True), f"Opening cash {money(cash_values['Opening cash'], True)}")
 
-overview, variance, cash_tab, detail, methodology = st.tabs(["Performance", "Budget variance", "Cash movement", "Data & exports", "Methodology"])
+overview, variance, comparison_tab, cash_tab, detail, methodology = st.tabs(["Performance", "Budget variance", "Prior periods", "Cash movement", "Data & exports", "Methodology"])
 
 with overview:
     st.subheader("Performance at a glance")
@@ -174,6 +181,7 @@ with overview:
         summary += f"The largest adverse category contribution is {largest.lower()} ({money(abs(impacts[largest]))}). "
     else:
         summary += "No category has an adverse profit contribution in this selection. "
+    summary += f"{int(budget_review.loc[CATEGORIES, 'Flagged for review'].sum())} of 5 underlying category variances meet the current investigation thresholds. "
     summary += "This identifies an area to investigate; the aggregate data do not establish its underlying cause."
     st.markdown(f'<div class="insight">{escape(summary)}</div>', unsafe_allow_html=True)
     left, right = st.columns([1.2, 1])
@@ -208,10 +216,46 @@ with variance:
     chart(fig, 420)
     st.caption("Each category appears once in the bridge. Gross profit and operating-cost subtotals are excluded to avoid double counting.")
     st.markdown("#### Management profit and loss")
-    view = statement.reset_index(names="Line item")
+    flagged_count = int(budget_review.loc[CATEGORIES,"Flagged for review"].sum())
+    st.caption(f"{flagged_count} of 5 underlying categories flagged · £{amount_threshold:,.2f} / {percentage_threshold:g}% · {threshold_rule.lower()}. Subtotals are not included in this count. Flags never alter totals.")
+    view = budget_review.drop(columns="Flagged for review").reset_index(names="Line item")
     st.dataframe(view.style.format({"Actual":"£{:,.2f}","Budget":"£{:,.2f}","Variance £":"£{:+,.2f}","Variance %":"{:+.1f}%","Profit impact £":"£{:+,.2f}"}, na_rep="N/A"), hide_index=True, width="stretch", height=340)
-    download("Download selected P&L", view, f"{export_prefix}_pnl.csv", "pnl_download")
+    pnl_export = view.assign(current_start=pd.Timestamp(start).strftime("%Y-%m"),current_end=pd.Timestamp(end).strftime("%Y-%m"),business_units="; ".join(units),threshold_gbp=amount_threshold,threshold_pct=percentage_threshold,threshold_rule=threshold_rule)
+    download("Download selected P&L", pnl_export, f"{export_prefix}_pnl.csv", "pnl_download")
     st.caption("Costs are displayed as positive magnitudes. Gross profit = Revenue − Direct costs; operating profit also deducts People, Sales & marketing and Administration. No tax, interest or other income is modelled.")
+
+with comparison_tab:
+    st.subheader("Compare actual performance over time")
+    basis = st.radio("Comparison basis",COMPARISON_BASES,horizontal=True,key="comparison_basis")
+    comparison = period_comparison(ledger,start,end,units,basis)
+    reference_label = f"{comparison['reference_start']:%b %Y} – {comparison['reference_end']:%b %Y}"
+    st.caption(f"Current: {period} · Reference: {reference_label} · {comparison['months']} month(s) each · Same {len(units)} selected business unit(s). Actual-to-actual comparison; budget figures are excluded.")
+    if not comparison["available"]:
+        missing_labels = ", ".join(f"{pd.Timestamp(m):%b %Y}" for m in comparison["missing_months"])
+        st.info(f"Reference period unavailable: {comparison['missing_actual_records']} required Actual records are missing across {missing_labels}. No partial comparison or zero-filled reference is shown. Supply complete reference data or choose another period/basis.")
+    else:
+        compared = review_flags(comparison["table"],amount_threshold,percentage_threshold,threshold_rule,"Change £","Change %")
+        cols = st.columns(3)
+        for column,line in zip(cols[:2],["Revenue","Operating profit"]):
+            row = compared.loc[line]
+            detail_text = f"{money(row['Change £'])} vs reference; " + (f"{row['Change %']:+.1f}%" if pd.notna(row['Change %']) else "% unavailable")
+            with column:
+                card(line + " · current actual",money(row["Current actual"],True),detail_text,bool(row["Profit impact £"] >= 0))
+        change = comparison["margin_change_pp"]
+        with cols[2]:
+            card("Operating margin change",f"{change:+.1f} pp" if change is not None else "N/A","Current margin minus reference margin",bool(change >= 0) if change is not None else None)
+        fig = go.Figure()
+        for label,color in [("Reference actual",BLUE),("Current actual",TEAL)]:
+            fig.add_trace(go.Bar(x=["Revenue","Operating profit"],y=compared.loc[["Revenue","Operating profit"],label],name=label,marker_color=color))
+        fig.update_layout(title="Current and reference actuals",barmode="group",yaxis_tickprefix="£")
+        chart(fig,330)
+        count = int(compared.loc[CATEGORIES,"Flagged for review"].sum())
+        st.caption(f"{count} of 5 underlying category changes flagged for investigation. Review thresholds: £{amount_threshold:,.2f} / {percentage_threshold:g}% · {threshold_rule.lower()}. Favourable/adverse describes profit impact, not a causal conclusion.")
+        compared_view = compared.drop(columns="Flagged for review").reset_index(names="Line item")
+        st.dataframe(compared_view.style.format({"Current actual":"£{:,.2f}","Reference actual":"£{:,.2f}","Change £":"£{:+,.2f}","Change %":"{:+.1f}%","Profit impact £":"£{:+,.2f}"},na_rep="N/A"),hide_index=True,width="stretch",height=340)
+        comparison_export = compared_view.assign(current_start=pd.Timestamp(start).strftime("%Y-%m"),current_end=pd.Timestamp(end).strftime("%Y-%m"),reference_start=comparison["reference_start"].strftime("%Y-%m"),reference_end=comparison["reference_end"].strftime("%Y-%m"),comparison_basis=basis,business_units="; ".join(units),threshold_gbp=amount_threshold,threshold_pct=percentage_threshold,threshold_rule=threshold_rule)
+        download("Download prior-period comparison",comparison_export,f"{export_prefix}_prior_period_comparison.csv","comparison_download")
+        st.caption("Change = current actual − reference actual. Change % is shown only for a positive reference actual; zero or loss baselines are N/A. Where % is unavailable, only the pound threshold is used. Margin change is in percentage points and is not threshold-tested.")
 
 with cash_tab:
     st.subheader("Follow the cash")
@@ -252,6 +296,10 @@ with methodology:
 **Revenue and costs.** The management ledger stores positive amounts by month, business unit, category and scenario. Uploaded account labels are explicitly mapped to the five supported categories, and distinct source-account totals in the same category are summed. Duplicate month/unit/source-account/scenario rows are rejected. Unused categories are filled with zero only with explicit approval; incomplete actual/budget pairs are rejected. Costs are subtracted when calculating profit. The simplified operating profit measure is not net income; no tax, interest, depreciation schedule or balance sheet is modelled.
 
 **Variances.** Monetary variance is actual minus budget. Percentage variance divides that difference by budget; zero budget is shown as N/A. Revenue and profit increases are favourable; cost increases are adverse. “Favourable” describes the arithmetic comparison, not proof of a good business decision.
+
+**Prior periods.** Compare actuals for the same selected business units against the same months one year earlier, or the immediately preceding equal-length period. Every required reference month/unit/category Actual record must be present; otherwise the reference is unavailable. No partial periods or inferred zero references are compared. Change percentages are N/A when reference actuals are zero or negative; monetary changes still display. Comparisons use only the active data source, never another viewer’s uploads or the demo as a reference for uploaded data.
+
+**Investigation thresholds.** The sidebar pound and percentage limits are inclusive and use absolute changes. Either threshold flags a nonzero line meeting at least one limit; Both thresholds requires both where a percentage exists. If the percentage is unavailable, only the pound test applies, labelled explicitly. Zero-change lines are not flagged even with zero limits. Flags apply to both budget variances and period changes without changing totals. Counts cover the five underlying categories, excluding derived subtotals; these are user-defined investigation limits, not statutory materiality or an audit conclusion.
 
 **Margins.** Operating margin is operating profit divided by revenue. Margin variance is expressed in percentage points. Period totals are used to calculate the period margin.
 

@@ -19,6 +19,35 @@ A finance analyst portfolio project by **Michael Adebayo**, combining financial 
 
 The methodology and current data-source status stay visible throughout the experience. Sidebar filters apply to all tabs; account/scenario filters in Data & exports affect only its table and download.
 
+## Prior periods and investigation thresholds
+
+Open **Prior periods** and choose:
+
+- **Same period last year:** the same selected months, shifted back 12 months.
+- **Previous period (same length):** the consecutive block immediately before the selected period. For January–March 2026, this is October–December 2025.
+
+Comparisons use **Actual versus Actual**, the same selected business units and the same number of months. The reference can cross year boundaries and comes only from the active data source. Every required reference month/unit/category Actual record must exist; otherwise the app explains what is missing and displays no partial or inferred-zero comparison. A one-period upload without reference history therefore remains usable for P&L/budget analysis but has no prior-period comparison.
+
+Change is current actual minus reference actual. Change percentages are shown only where the reference actual is positive; zero or negative reference values are N/A, with monetary changes still available. Operating margin change is calculated from each period's aggregated profit/revenue and shown in **percentage points**.
+
+In the sidebar, expand **Investigation thresholds** to set a pound limit, percentage limit and rule:
+
+| Rule | Nonzero line is flagged when |
+|---|---|
+| Either threshold | Absolute monetary change meets the pound limit **or** absolute percentage change meets the percentage limit |
+| Both thresholds | Both limits are met where the percentage is available |
+| Percentage unavailable | The pound limit alone is used under either rule, labelled explicitly |
+
+Limits are inclusive (equal to the threshold counts); zero-change lines are never flagged. A zero threshold is a minimum of zero, not a disabled test. Defaults are £10,000 and 5%, using Either threshold. These are user-defined investigation settings, **not statutory materiality or an audit conclusion**.
+
+Review flags appear in budget and prior-period P&L tables without filtering or changing figures. Counts cover the five underlying account categories; gross profit/operating-cost/operating-profit subtotals are not double counted. Margin changes are descriptive and are not threshold-tested.
+
+The comparison CSV includes both period boundaries, basis, selected units and threshold settings. The existing P&L download also includes its reporting period and review settings for traceability.
+
+![Prior-period comparison](screenshots/prior-periods.png)
+
+[Mobile comparison view](screenshots/prior-periods-mobile.png).
+
 ## Upload your data
 
 CSV and Excel upload workflows were verified on the public app on **23 November 2026**, using only synthetic template data.
@@ -151,6 +180,7 @@ The financial tests cover the operating profit identity, an independently reconc
 finance-performance-dashboard/
 ├── app.py
 ├── finance.py
+├── comparisons.py
 ├── imports.py
 ├── upload_ui.py
 ├── themes.py
@@ -166,6 +196,7 @@ finance-performance-dashboard/
 ├── screenshots/
 └── tests/
     ├── test_finance.py
+    ├── test_comparisons.py
     └── test_imports.py
 ```
 

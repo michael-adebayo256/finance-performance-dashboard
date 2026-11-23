@@ -92,3 +92,16 @@ URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
 - Cleared the CSV import, uploaded the live Excel template into both file controls, explicitly selected its Accounts/Cash worksheets, validated/applied the pair and observed £60k closing cash.
 - No browser pageerror events or final Streamlit exception element were observed. Explicitly cleared the synthetic uploads at the end of the test.
 - Local two-viewer isolation and mobile checks are recorded above; this public smoke test did not repeat every malformed-input case or inspect private host logs. Only generated synthetic data were uploaded during testing.
+
+## Prior periods and investigation thresholds — 23 November 2026
+
+- 24 unittests pass: all prior financial/import cases plus six comparison/threshold cases.
+- Independently checked matched current/reference Actual totals for selected units and the operating-margin percentage-point change.
+- Verified previous equal-length periods across year boundaries, partial/missing reference rejection, adverse cost signs, loss/zero reference percentage handling, inclusive threshold boundaries, Either/Both logic and the labelled pound-only fallback when a percentage is unavailable.
+- AppTest executes seven chart specifications, toggles the threshold rule and confirms the earliest demo year has no invented prior-year reference table.
+- Local Chromium downloaded eight-line comparisons for January–October 2026 versus January–October 2025 and versus March–December 2025.
+- Budget review flags changed from four of five underlying categories under Either to one under Both, then zero after raising the pound threshold to £1m. Actual, Budget, Variance £, Variance % and Profit impact £ fields in before/after downloaded P&Ls remained identical.
+- The comparison tab and download were checked at mobile width. No browser pageerror events or final Streamlit exception element were observed.
+- Native light/dark palettes, upload processing and synthetic source CSVs are unchanged. New comparisons and flags are pure per-viewer calculations; no uploaded-data cache or persistence was added.
+
+Public verification of this release is recorded after the deployment becomes available.
