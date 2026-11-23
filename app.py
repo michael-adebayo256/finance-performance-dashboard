@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 import streamlit as st
 from finance import load_data, pnl, monthly_summary, profit_bridge, cash_summary, percent, CATEGORIES
 from themes import PALETTES
+from imports import export_csv
+from upload_ui import render_import, clear_uploads
 
 BASE = Path(__file__).resolve().parent
 st.set_page_config(page_title="Finance Lens | Performance & Variance", page_icon="◈", layout="wide")
@@ -22,7 +24,10 @@ def sync_appearance():
         st.rerun()
 
 
-sync_appearance()
+# Do not schedule background reruns while an import form is being completed.
+# Active dashboards retain automatic theme synchronisation below.
+if st.session_state.get("data_source") != "Upload files":
+    sync_appearance()
 palette = PALETTES[mode]
 TEAL, BLUE, GOLD, RED = (palette[key] for key in ("teal", "blue", "gold", "red"))
 css_variables = ";".join(f"--finance-{key.replace('_', '-')}: {value}" for key, value in palette.items() if key != "template")
@@ -82,39 +87,58 @@ def card(label, value, detail, good=None):
 
 
 def download(label, frame, filename, key):
-    st.download_button(label, frame.to_csv(index=False).encode("utf-8"), filename, "text/csv", key=key)
+    st.download_button(label, export_csv(frame), filename, "text/csv", key=key)
 
-
-try:
-    ledger, cash = get_data()
-except (ValueError, OSError) as error:
-    st.error(f"Could not load the demonstration data: {error}")
-    st.stop()
 
 with st.sidebar:
     st.markdown("### ◈ Finance Lens")
     st.caption("MANAGEMENT REPORTING")
-    year = st.selectbox("Reporting year", sorted(ledger.month.dt.year.unique(), reverse=True))
+    source = st.radio("Data source",["Synthetic demo","Upload files"],key="data_source",on_change=clear_uploads)
+
+is_upload = source == "Upload files"
+source_label = "Uploaded data · GBP · Session only" if is_upload else "Synthetic company data · Portfolio demonstration"
+st.markdown('<div class="eyebrow">FINANCE LENS / PERFORMANCE & VARIANCE</div>', unsafe_allow_html=True)
+st.title("The numbers. The drivers. The decisions.")
+st.markdown('<p class="intro">Explore operating performance, explain the gap to budget, and follow the movement of cash.</p><span class="demo">'+source_label.upper()+'</span>', unsafe_allow_html=True)
+st.write("")
+if is_upload:
+    imported = render_import()
+    if imported is None:
+        st.info("Validate the mapped records, review the preview, then choose Use validated data to open the dashboard.")
+        st.stop()
+    ledger,cash = imported
+    dataset_id = st.session_state.import_active["signature"]
+    sync_appearance()
+else:
+    try:
+        ledger,cash = get_data()
+    except (ValueError,OSError) as error:
+        st.error(f"Could not load the demonstration data: {error}")
+        st.stop()
+    dataset_id = "demo"
+export_prefix = "finance" if is_upload else "synthetic"
+with st.sidebar:
+    year = st.selectbox("Reporting year", sorted(ledger.month.dt.year.unique(), reverse=True),key="year_"+dataset_id)
     months = sorted(ledger.loc[ledger.month.dt.year == year, "month"].unique())
-    start, end = st.select_slider("Reporting period", options=months, value=(months[0], months[-1]), format_func=lambda d:pd.Timestamp(d).strftime("%b"))
-    units = st.multiselect("Business units", sorted(ledger.business_unit.unique()), default=sorted(ledger.business_unit.unique()))
+    if len(months) == 1:
+        start = end = months[0]
+        st.caption(f"Reporting period: {pd.Timestamp(start):%b %Y}")
+    else:
+        start, end = st.select_slider("Reporting period", options=months, value=(months[0], months[-1]), format_func=lambda d:pd.Timestamp(d).strftime("%b"),key="period_"+dataset_id+str(year))
+    units = st.multiselect("Business units", sorted(ledger.business_unit.unique()), default=sorted(ledger.business_unit.unique()),key="units_"+dataset_id)
     st.divider()
-    st.markdown("**GBP · Fictional data**")
-    st.caption("January 2025–October 2026. All values are synthetic and generated for this portfolio project.")
-    st.caption("Filters apply to every tab. Opening and closing cash use the selected period’s boundaries.")
+    st.markdown("**GBP · Uploaded data**" if is_upload else "**GBP · Fictional data**")
+    st.caption("Using validated uploaded totals in this session. Validation does not audit their accuracy." if is_upload else "January 2025–October 2026. All values are synthetic and generated for this portfolio project.")
+    st.caption("Filters apply to every tab. Opening and closing cash use the selected period’s boundaries, when cash data are supplied.")
     st.caption("Created by Michael Adebayo")
     st.divider()
     st.caption(f"Appearance: {mode.title()}. Switch in the top-right menu (⋮ → Light / Dark). Streamlit remembers your choice in this browser.")
 
-st.markdown('<div class="eyebrow">FINANCE LENS / PERFORMANCE & VARIANCE</div>', unsafe_allow_html=True)
-st.title("The numbers. The drivers. The decisions.")
-st.markdown('<p class="intro">Explore operating performance, explain the gap to budget, and follow the movement of cash.</p><span class="demo">SYNTHETIC COMPANY DATA · PORTFOLIO DEMONSTRATION</span>', unsafe_allow_html=True)
-st.write("")
 if not units:
     st.info("Select at least one business unit in the sidebar to display the analysis.")
     st.stop()
 selection = ledger[ledger.month.between(start, end) & ledger.business_unit.isin(units)].copy()
-selected_cash = cash[cash.month.between(start, end) & cash.business_unit.isin(units)].copy()
+selected_cash = cash[cash.month.between(start, end) & cash.business_unit.isin(units)].copy() if cash is not None else None
 statement = pnl(selection)
 trend = monthly_summary(selection)
 period = f"{pd.Timestamp(start):%b %Y} – {pd.Timestamp(end):%b %Y}"
@@ -123,7 +147,7 @@ revenue = statement.loc["Revenue"]
 profit = statement.loc["Operating profit"]
 margin = percent(profit.Actual, revenue.Actual)
 budget_margin = percent(profit.Budget, revenue.Budget)
-cash_values, cash_trend = cash_summary(selected_cash)
+cash_values, cash_trend = cash_summary(selected_cash) if selected_cash is not None else (None,None)
 columns = st.columns(4)
 with columns[0]:
     card("Revenue", money(revenue.Actual, True), f"{money(revenue['Variance £'])} vs budget", bool(revenue["Profit impact £"] >= 0))
@@ -132,7 +156,10 @@ with columns[1]:
 with columns[2]:
     card("Operating margin", f"{margin:.1f}%" if margin is not None else "N/A", f"{margin - budget_margin:+.1f} percentage points vs budget" if margin is not None and budget_margin is not None else "Revenue is zero; margin unavailable", bool(margin >= budget_margin) if margin is not None and budget_margin is not None else None)
 with columns[3]:
-    card("Closing cash", money(cash_values["Closing cash"], True), f"Opening cash {money(cash_values['Opening cash'], True)}")
+    if cash_values is None:
+        card("Closing cash", "Not supplied", "A separate cash file is needed.")
+    else:
+        card("Closing cash", money(cash_values["Closing cash"], True), f"Opening cash {money(cash_values['Opening cash'], True)}")
 
 overview, variance, cash_tab, detail, methodology = st.tabs(["Performance", "Budget variance", "Cash movement", "Data & exports", "Methodology"])
 
@@ -154,7 +181,7 @@ with overview:
         fig = go.Figure()
         fig.add_trace(go.Bar(x=trend.month, y=trend["Actual revenue"], name="Actual revenue", marker_color=TEAL))
         fig.add_trace(go.Scatter(x=trend.month, y=trend["Budget revenue"], name="Budget revenue", line=dict(color=GOLD, dash="dash", width=2)))
-        fig.update_layout(title="Monthly revenue · actual vs budget", yaxis_tickprefix="£", xaxis_tickformat="%b %Y")
+        fig.update_layout(title="Monthly revenue · actual vs budget", yaxis_tickprefix="£", xaxis_tickformat="%b %Y", xaxis_tickvals=trend.month)
         chart(fig)
     with right:
         unit_rows = []
@@ -168,7 +195,7 @@ with overview:
     fig = go.Figure()
     for scenario, color in [("Actual",TEAL),("Budget",GOLD)]:
         fig.add_trace(go.Scatter(x=trend.month, y=trend[f"{scenario} margin %"], name=f"{scenario} margin", mode="lines+markers", line=dict(color=color, dash="solid" if scenario == "Actual" else "dash")))
-    fig.update_layout(title="Operating margin trend", yaxis_ticksuffix="%", xaxis_tickformat="%b %Y")
+    fig.update_layout(title="Operating margin trend", yaxis_ticksuffix="%", xaxis_tickformat="%b %Y", xaxis_tickvals=trend.month)
     chart(fig, 300)
     st.caption("Period margin is total operating profit ÷ total revenue, rather than an average of monthly percentages.")
 
@@ -183,21 +210,23 @@ with variance:
     st.markdown("#### Management profit and loss")
     view = statement.reset_index(names="Line item")
     st.dataframe(view.style.format({"Actual":"£{:,.2f}","Budget":"£{:,.2f}","Variance £":"£{:+,.2f}","Variance %":"{:+.1f}%","Profit impact £":"£{:+,.2f}"}, na_rep="N/A"), hide_index=True, width="stretch", height=340)
-    download("Download selected P&L", view, "synthetic_pnl.csv", "pnl_download")
+    download("Download selected P&L", view, f"{export_prefix}_pnl.csv", "pnl_download")
     st.caption("Costs are displayed as positive magnitudes. Gross profit = Revenue − Direct costs; operating profit also deducts People, Sales & marketing and Administration. No tax, interest or other income is modelled.")
 
 with cash_tab:
     st.subheader("Follow the cash")
-    st.caption("Cash is a separate synthetic ledger. Receipts and payments differ from accrual revenue and costs; profit and cash are distinct measures.")
-    cash_labels = list(cash_values)
-    cash_y = [cash_values["Opening cash"], cash_values["Customer receipts"], -cash_values["Operating payments"], -cash_values["Capital spend"], cash_values["Financing inflow"], cash_values["Closing cash"]]
-    fig = go.Figure(go.Waterfall(x=cash_labels,y=cash_y,measure=["absolute"]+["relative"]*4+["total"],increasing=dict(marker_color=TEAL),decreasing=dict(marker_color=RED),totals=dict(marker_color=BLUE)))
-    fig.update_layout(title="Opening-to-closing cash bridge", yaxis_tickprefix="£")
-    chart(fig, 400)
-    chart(px.line(cash_trend.reset_index(), x="month", y="closing_cash_gbp", markers=True, color_discrete_sequence=[TEAL], title="Month-end cash balance", labels={"closing_cash_gbp":"Closing cash (£)","month":"Month"}), 300)
-    download("Download selected cash movements", selected_cash, "synthetic_cash_movements.csv", "cash_download")
-    st.info("This bridge reconciles opening and closing cash. It is a management illustration, not a statutory cash-flow statement or a forecast.")
-
+    if selected_cash is None:
+        st.info("Cash analysis is unavailable. Upload and validate a separate cash-movements file; cash balances cannot be inferred from a P&L.")
+    else:
+        st.caption("Cash is a separate ledger. Receipts and payments differ from accrual revenue and costs; profit and cash are distinct measures.")
+        cash_labels = list(cash_values)
+        cash_y = [cash_values["Opening cash"], cash_values["Customer receipts"], -cash_values["Operating payments"], -cash_values["Capital spend"], cash_values["Financing inflow"], cash_values["Closing cash"]]
+        fig = go.Figure(go.Waterfall(x=cash_labels,y=cash_y,measure=["absolute"]+["relative"]*4+["total"],increasing=dict(marker_color=TEAL),decreasing=dict(marker_color=RED),totals=dict(marker_color=BLUE)))
+        fig.update_layout(title="Opening-to-closing cash bridge", yaxis_tickprefix="£")
+        chart(fig, 400)
+        chart(px.line(cash_trend.reset_index(), x="month", y="closing_cash_gbp", markers=True, color_discrete_sequence=[TEAL], title="Month-end cash balance", labels={"closing_cash_gbp":"Closing cash (£)","month":"Month"}).update_xaxes(tickvals=cash_trend.index,tickformat="%b %Y"), 300)
+        download("Download selected cash movements", selected_cash, f"{export_prefix}_cash_movements.csv", "cash_download")
+        st.info("This bridge reconciles opening and closing cash. It is a management illustration, not a statutory cash-flow statement or a forecast.")
 with detail:
     st.subheader("Trace the numbers")
     st.caption("Every metric is derived from the records in the selected year, period and business units. The extra filters below affect only this table and its download.")
@@ -206,31 +235,33 @@ with detail:
     records = selection[selection.category.isin(categories) & selection.scenario.isin(scenarios)].sort_values(["month","business_unit","category","scenario"])
     st.caption(f"{len(records):,} of {len(selection):,} selected ledger records displayed. All amounts are GBP.")
     st.dataframe(records, hide_index=True, width="stretch", column_config={"amount_gbp":st.column_config.NumberColumn("Amount (£)",format="£%.2f"),"month":st.column_config.DateColumn("Month",format="MMM YYYY")}, height=440)
-    download("Download displayed ledger records", records, "synthetic_management_accounts.csv", "ledger_download")
+    download("Download displayed ledger records", records, f"{export_prefix}_management_accounts.csv", "ledger_download")
     with st.expander("Data quality checks"):
-        st.write(f"Validated {len(ledger):,} ledger rows and {len(cash):,} cash rows: required fields, unique keys, complete actual/budget pairs, finite amounts, cash reconciliation and opening-balance continuity.")
+        st.write(f"Validated {len(ledger):,} ledger rows: required fields, consecutive months, unique keys, complete actual/budget combinations and finite nonnegative amounts.")
+        st.write(f"Validated {len(cash):,} cash rows: matching periods/units, reconciled cash bridges and opening-balance continuity." if cash is not None else "Cash data were not supplied; no cash values have been inferred.")
         st.write("No missing values were silently dropped or imputed.")
 
 with methodology:
     st.subheader("Definitions & assumptions")
+    st.markdown("**Current source:** Uploaded records held in this session." if is_upload else "**Current source:** Reproducible synthetic demo.")
     st.markdown('''
-**Purpose.** A finance analyst portfolio project by Michael Adebayo. The fictional company, business units, budget, financial results and cash movements were generated for demonstration. They are not extracted from a real employer or client.
+**Purpose.** A finance analyst tool by Michael Adebayo. Synthetic demo mode uses fictional data generated for demonstration. Upload mode uses only the mapped records you explicitly validate and apply; demo and uploaded records are never combined.
 
-**Period and currency.** January 2025–October 2026; GBP throughout. “Actual” labels a synthetic scenario, not genuine transactions. The budget represents a fixed original plan; it is not a revised forecast.
+**Period and currency.** GBP throughout; uploaded data must be confirmed GBP or have a GBP currency column. Demo mode covers January 2025–October 2026; “Actual” is synthetic in that mode. Uploaded periods come from your mapped dates. Dates are normalised to months. Budget figures are treated as the supplied comparison plan, not a forecast.
 
-**Revenue and costs.** The management ledger stores positive amounts by month, business unit, category and scenario. Costs are subtracted when calculating profit. The simplified operating profit measure is not net income; no tax, interest, depreciation schedule or balance sheet is modelled.
+**Revenue and costs.** The management ledger stores positive amounts by month, business unit, category and scenario. Uploaded account labels are explicitly mapped to the five supported categories, and distinct source-account totals in the same category are summed. Duplicate month/unit/source-account/scenario rows are rejected. Unused categories are filled with zero only with explicit approval; incomplete actual/budget pairs are rejected. Costs are subtracted when calculating profit. The simplified operating profit measure is not net income; no tax, interest, depreciation schedule or balance sheet is modelled.
 
 **Variances.** Monetary variance is actual minus budget. Percentage variance divides that difference by budget; zero budget is shown as N/A. Revenue and profit increases are favourable; cost increases are adverse. “Favourable” describes the arithmetic comparison, not proof of a good business decision.
 
 **Margins.** Operating margin is operating profit divided by revenue. Margin variance is expressed in percentage points. Period totals are used to calculate the period margin.
 
-**Cash.** Opening cash + customer receipts − operating payments − capital spend + financing inflow = closing cash. Within each business unit, the next month starts with the previous month’s closing balance. The period view uses the first opening and last closing balance rather than summing balances. Business-unit balances are additive demo allocations; intercompany transfers and consolidation adjustments are not modelled.
+**Cash.** Opening cash + customer receipts − operating payments − capital spend + financing inflow = closing cash. Cash requires a separate validated file. Within each business unit, the next month starts with the previous month’s closing balance. The period view uses the first opening and last closing balance rather than summing balances. Business-unit balances are additive demo allocations; intercompany transfers and consolidation adjustments are not modelled.
 
 **Interpretation.** The displayed commentary identifies the largest adverse category contribution, not a causal explanation. The data do not support customer-level, invoice-level or product-level conclusions. There is no forecasting or investment advice feature.
 
-**Reproducibility.** `generate_data.py` uses a fixed seed. The two CSVs are bundled with the app; regenerating the data is optional. Reconciliation tests and financial definitions are included in the repository.
+**Reproducibility.** `generate_data.py` uses a fixed seed for demo mode. User uploads are not bundled, cached globally, saved to disk or sent to an AI service. They are held in the current Streamlit session; use Clear uploaded data to remove application references and reset the upload controls. This is not a guarantee of immediate secure memory erasure. See the upload panel for the data-handling explanation. Reconciliation and import validation tests are included in the repository.
 ''')
     st.link_button("Michael Adebayo · LinkedIn", "https://www.linkedin.com/in/michael-adebayo-223b0722/")
 
 st.divider()
-st.caption("FINANCE LENS · Michael Adebayo · Synthetic data for portfolio demonstration · GBP")
+st.caption(f"FINANCE LENS · Michael Adebayo · {source_label} · GBP")

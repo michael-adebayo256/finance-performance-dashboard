@@ -63,3 +63,20 @@ URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
 - The data tab displayed 300 ledger records for January–October 2026.
 - No browser pageerror events or final Streamlit exception element were observed.
 - The complete two-theme, filter and mobile checks above were performed locally; this public smoke test did not repeat every combination or inspect private cloud build logs.
+
+## Upload release checks — 23 November 2026
+
+- Added in-memory CSV/XLSX readers, explicit worksheet/column/account/scenario mapping, date/currency confirmation and a two-stage validation preview/apply flow.
+- Eighteen unittests pass: the original six financial cases plus twelve import cases covering wide/long equivalence, real CSV/XLSX parsing, explicit date formats, duplicates, missing comparisons, opt-in zero categories, currencies, numeric errors, safe labels/exports, cash completeness/reconciliation and malformed/oversized/formula files.
+- The isolated finance `.venv` contains openpyxl 3.1.5 and defusedxml 0.7.1; openpyxl reports DEFUSEDXML enabled, and pip check passes.
+- AppTest confirms six demo chart specifications and the empty upload workflow without exceptions.
+- Local Chromium uploaded synthetic CSV accounts, required preview before use, displayed £100k revenue/£30k operating profit/30% margin, and verified an actual downloaded P&L. With no cash file, closing cash was Not supplied and cash analysis was unavailable.
+- Adding a separate cash file produced £60k closing cash. Replacing accounts with mixed-currency data blocked the old dashboard. Clear uploaded data reset both file controls and applied records.
+- A separate browser context retained the synthetic demo and received no imported unit labels or KPIs. Uploaded records survived an appearance change in their own session.
+- Uploaded the same synthetic Excel workbook to both controls, explicitly selected Accounts/Cash worksheets, validated and applied the pair, and checked its mobile dashboard. No browser pageerror events or final Streamlit exception element were observed in the passing run.
+- Background theme polling is paused while an incomplete import is being prepared; active dashboards retain theme synchronisation. Sheet changes also reset mapping identities.
+- Single-month charts use explicit month ticks, avoiding labels from neighbouring unselected months.
+- The bundled demo CSVs and data generator remain byte-for-byte unchanged. Financial calculation identities remain unchanged; shared validation was refactored for use by demo and uploaded data.
+- All browser fixtures and new screenshots use generated synthetic data. No user financial file is included in this repository.
+
+The preceding public deployment checks refer to the earlier demo release. Public verification of the upload release is recorded separately after the updated build becomes available.

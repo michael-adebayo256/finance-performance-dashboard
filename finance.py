@@ -10,41 +10,67 @@ CASH_COLUMNS = ["opening_cash_gbp", "customer_receipts_gbp", "operating_payments
                 "capital_spend_gbp", "financing_inflow_gbp", "closing_cash_gbp"]
 
 
+def validate_ledger(ledger):
+    required = {"month", "business_unit", "category", "scenario", "amount_gbp"}
+    if not required.issubset(ledger.columns):
+        raise ValueError("Management accounts are missing required columns.")
+    if ledger.empty or ledger[list(required)].isna().any().any():
+        raise ValueError("Management accounts must contain records with no missing required values.")
+    if not pd.api.types.is_datetime64_any_dtype(ledger.month):
+        raise ValueError("Month must contain validated dates.")
+    if (ledger.month.dt.day != 1).any():
+        raise ValueError("Dates must be normalised to month starts.")
+    months = sorted(ledger.month.unique())
+    if len(months) > 120 or len(pd.date_range(months[0], months[-1], freq="MS")) != len(months):
+        raise ValueError("Reporting months must be consecutive, with at most 120 months.")
+    if not set(ledger.category).issubset(CATEGORIES) or set(ledger.scenario) != {"Actual", "Budget"}:
+        raise ValueError("Use the five supported account categories and both Actual and Budget scenarios.")
+    if (ledger.amount_gbp < 0).any() or not np.isfinite(ledger.amount_gbp).all():
+        raise ValueError("Ledger amounts must be finite, nonnegative magnitudes.")
+    if (ledger.amount_gbp > 1e12).any():
+        raise ValueError("An amount exceeds the supported maximum of £1 trillion per record.")
+    if ledger.duplicated(["month", "business_unit", "category", "scenario"]).any():
+        raise ValueError("Duplicate ledger records.")
+    if ledger.business_unit.nunique() > 50:
+        raise ValueError("At most 50 business units are supported.")
+    expected = pd.MultiIndex.from_product([months, sorted(ledger.business_unit.unique()), CATEGORIES, ["Actual", "Budget"]])
+    observed = pd.MultiIndex.from_frame(ledger[["month", "business_unit", "category", "scenario"]])
+    missing = expected.difference(observed)
+    if len(missing):
+        raise ValueError(f"Every month/unit/category must have actual and budget records. {len(missing)} combinations are missing; add explicit zero rows where appropriate.")
+
+
+def validate_cash(cash, ledger):
+    if not {"month", "business_unit", *CASH_COLUMNS}.issubset(cash.columns):
+        raise ValueError("Cash data are missing required columns.")
+    if cash.empty or cash[["month", "business_unit", *CASH_COLUMNS]].isna().any().any():
+        raise ValueError("Cash data must contain records with no missing required values.")
+    if cash.duplicated(["month", "business_unit"]).any():
+        raise ValueError("Duplicate cash records.")
+    if not np.isfinite(cash[CASH_COLUMNS]).all().all():
+        raise ValueError("Cash data must be finite.")
+    if (cash[CASH_COLUMNS].abs() > 1e12).any().any():
+        raise ValueError("Cash amounts exceed the supported range.")
+    flows = ["customer_receipts_gbp", "operating_payments_gbp", "capital_spend_gbp", "financing_inflow_gbp"]
+    if (cash[flows] < 0).any().any():
+        raise ValueError("Cash receipts, payments, capital spend and financing inflow must be nonnegative magnitudes. Opening/closing balances may be negative.")
+    expected_keys = set(map(tuple, ledger[["month", "business_unit"]].drop_duplicates().to_numpy()))
+    if expected_keys != set(map(tuple, cash[["month", "business_unit"]].to_numpy())):
+        raise ValueError("Cash and ledger periods/units must match completely.")
+    check = cash.opening_cash_gbp + cash.customer_receipts_gbp - cash.operating_payments_gbp - cash.capital_spend_gbp + cash.financing_inflow_gbp
+    if not np.allclose(check, cash.closing_cash_gbp, atol=.011, rtol=0):
+        raise ValueError("Cash bridge does not reconcile. Check opening + receipts − payments − capital spend + financing inflow = closing (tolerance £0.01).")
+    for _, group in cash.sort_values("month").groupby("business_unit"):
+        if not np.allclose(group.opening_cash_gbp.iloc[1:], group.closing_cash_gbp.iloc[:-1], atol=.011, rtol=0):
+            raise ValueError("Monthly opening cash does not match prior closing cash.")
+
+
 def load_data(directory):
     directory = Path(directory)
     ledger = pd.read_csv(directory / "management_accounts.csv", parse_dates=["month"])
     cash = pd.read_csv(directory / "cash_movements.csv", parse_dates=["month"])
-    required = {"month", "business_unit", "category", "scenario", "amount_gbp"}
-    if not required.issubset(ledger.columns):
-        raise ValueError("Management accounts are missing required columns.")
-    if not {"month", "business_unit", *CASH_COLUMNS}.issubset(cash.columns):
-        raise ValueError("Cash data are missing required columns.")
-    if ledger[list(required)].isna().any().any() or cash.isna().any().any():
-        raise ValueError("The dataset contains missing values.")
-    if not set(ledger.category).issubset(CATEGORIES) or set(ledger.scenario) != {"Actual", "Budget"}:
-        raise ValueError("Unexpected category or scenario.")
-    if (ledger.amount_gbp < 0).any() or not np.isfinite(ledger.amount_gbp).all():
-        raise ValueError("Ledger amounts must be finite, nonnegative magnitudes.")
-    if ledger.duplicated(["month", "business_unit", "category", "scenario"]).any():
-        raise ValueError("Duplicate ledger records.")
-    if cash.duplicated(["month", "business_unit"]).any():
-        raise ValueError("Duplicate cash records.")
-    expected = pd.MultiIndex.from_product([sorted(ledger.month.unique()), sorted(ledger.business_unit.unique()),
-                                          CATEGORIES, ["Actual", "Budget"]])
-    observed = pd.MultiIndex.from_frame(ledger[["month", "business_unit", "category", "scenario"]])
-    if len(expected.difference(observed)) or len(observed.difference(expected)):
-        raise ValueError("Every month/unit/category must have actual and budget records.")
-    if not np.isfinite(cash[CASH_COLUMNS]).all().all():
-        raise ValueError("Cash data must be finite.")
-    expected_keys = set(map(tuple, ledger[["month", "business_unit"]].drop_duplicates().to_numpy()))
-    if expected_keys != set(map(tuple, cash[["month", "business_unit"]].to_numpy())):
-        raise ValueError("Cash and ledger periods/units must match.")
-    check = cash.opening_cash_gbp + cash.customer_receipts_gbp - cash.operating_payments_gbp - cash.capital_spend_gbp + cash.financing_inflow_gbp
-    if not np.allclose(check, cash.closing_cash_gbp, atol=.011, rtol=0):
-        raise ValueError("Cash bridge does not reconcile.")
-    for _, group in cash.sort_values("month").groupby("business_unit"):
-        if not np.allclose(group.opening_cash_gbp.iloc[1:], group.closing_cash_gbp.iloc[:-1], atol=.011, rtol=0):
-            raise ValueError("Monthly opening cash does not match prior closing cash.")
+    validate_ledger(ledger)
+    validate_cash(cash, ledger)
     return ledger, cash
 
 

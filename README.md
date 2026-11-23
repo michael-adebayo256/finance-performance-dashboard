@@ -1,8 +1,8 @@
 # Finance Lens — Financial Performance & Budget Variance
 
-A finance analyst portfolio project by **Michael Adebayo**, combining financial reporting experience with Python analytics. The Streamlit dashboard explores a fictional company's operating performance, budget variances and cash movements across Consulting, Managed services and Training.
+A finance analyst portfolio project by **Michael Adebayo**, combining financial reporting experience with Python analytics. The Streamlit dashboard supports both a reproducible fictional-company demo and session-only uploads of monthly financial totals for operating performance, budget variance and cash analysis.
 
-**All company data, budgets, results and business units are synthetic.** No employer, client or personal financial records are used. The project is a management-reporting demonstration, not a real company case study or an investment analysis.
+**Bundled demo data are synthetic.** Upload mode uses only the records explicitly mapped, validated and applied by the viewer. Demo and uploaded records are never mixed. The application is a simplified management-reporting tool, not audited financial statements or investment analysis.
 
 **Live application:** [Open Finance Lens](https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/)
 
@@ -17,7 +17,48 @@ A finance analyst portfolio project by **Michael Adebayo**, combining financial 
 - Trace KPIs to underlying records and download the selected P&L, ledger or cash movements.
 - Review definitions, assumptions and data-validation checks inside the app.
 
-The methodology and synthetic-data status stay visible throughout the experience. Sidebar filters apply to all tabs; account/scenario filters in Data & exports affect only its table and download.
+The methodology and current data-source status stay visible throughout the experience. Sidebar filters apply to all tabs; account/scenario filters in Data & exports affect only its table and download.
+
+## Upload your data
+
+Choose **Data source → Upload files** in the sidebar. Download the Accounts CSV, Cash CSV or Excel templates from the import panel. Use authorised, anonymised company-level totals; do not include customer, employee, bank-account or other personal identifiers.
+
+1. Upload a **CSV or .xlsx** file. Choose the appropriate Excel sheet when needed.
+2. Choose **Wide** layout (separate actual and budget columns) or **Long** layout (scenario and amount columns).
+3. Map each required field to a distinct source column. Map source account names to the five supported categories. In Long layout, map scenario labels to Actual/Budget.
+4. Select the explicit date format. Confirm GBP if there is no currency column, or map a column containing GBP for every row.
+5. Optionally upload a separate cash file; the same Excel workbook can be uploaded to both inputs with different sheets selected.
+6. Select **Validate and preview**. Review the normalised records and P&L totals.
+7. Select **Use validated data** to analyse the records. Editing a file or mapping invalidates the previous preview/applied dataset; it never silently continues using old totals.
+8. Use **Clear uploaded data**, or return to Synthetic demo, to reset the upload controls and remove the app's uploaded-data session references.
+
+### Supported input
+
+- Maximum **5 MB per file**, **10,000 data rows**, **30 columns**, 20 Excel sheets and 50 MB expanded workbook size.
+- UTF-8 comma-separated CSV with one unique, nonempty header row. XLSX sheets must contain values, not formulas; encrypted workbooks, macros and legacy `.xls` are unsupported. Paste calculated values into a clean sheet first.
+- Consecutive reporting months (at most 120), at most 50 business units, with a complete Actual/Budget comparison for every unit/category/month. This is a monthly summary importer, not an invoice or transaction importer.
+- Dates: `YYYY-MM`, `YYYY-MM-DD`, `DD/MM/YYYY`, `MM/DD/YYYY`, or native Excel date cells. Dates are normalised to month starts; no ambiguous date-format inference is used. Supported years: 2000–2100.
+- GBP only; no currency conversion. Amounts are pounds, not thousands, with up to two decimal places, without currency symbols or thousands separators in text. Revenue and costs must be nonnegative magnitudes. There is no automatic sign reversal or netting of negative ledger rows.
+- Multiple distinct source accounts may map to the same P&L category; their amounts are explicitly summed. Duplicate month/unit/source-account/scenario rows are rejected first. Missing values, nonfinite numbers and incomplete comparisons are rejected.
+- Unused categories are zero-filled **only if explicitly selected** and only when absent from the entire file; missing scenario pairs/periods are not inferred. Use explicit zero rows for no-activity periods.
+- Cash must cover the exact imported month/unit combinations, reconcile opening-to-closing within £0.01 and carry the previous closing balance into the next opening. Receipts/payments/capital spend/financing inflow are nonnegative; opening/closing balances may represent an overdraft. The current cash model does not separately support dividends, financing repayments or FX movements.
+- Labels cannot start with spreadsheet formula prefixes or contain control characters. CSV exports also escape formula prefixes in text; numeric negative financial values are preserved.
+
+**No cash file?** P&L analysis still works. Closing cash displays **Not supplied**, and the cash tab explains why it is unavailable. Synthetic cash is never substituted and cash balances are not inferred from profit.
+
+### Wide accounts template
+
+| month | business_unit | category | actual | budget | currency |
+|---|---|---|---:|---:|---|
+| 2026-01 | Example unit | Revenue | 100000 | 95000 | GBP |
+| 2026-01 | Example unit | Direct costs | 30000 | 28000 | GBP |
+| 2026-01 | Example unit | People | 25000 | 26000 | GBP |
+| 2026-01 | Example unit | Sales & marketing | 5000 | 4500 | GBP |
+| 2026-01 | Example unit | Administration | 10000 | 11000 | GBP |
+
+Long layout replaces `actual`/`budget` with `scenario`/`amount_gbp`, with one Actual and one Budget row per account/month/unit. Category names can differ in your file as long as all source labels are mapped explicitly.
+
+See [DATA_HANDLING.md](DATA_HANDLING.md) for actual data handling, session lifetime and hosting limits.
 
 ## Light and dark appearance
 
@@ -28,6 +69,8 @@ The dark navy design remains the configured base. Streamlit respects the viewer'
 Both modes use green for favourable contributions and red for adverse contributions, with signed values and assessment labels alongside colour. Light mode uses darker accents for legibility on pale backgrounds.
 
 ## Screenshots
+
+Upload examples use only the supplied synthetic template: [validation preview](screenshots/upload-preview.png), [uploaded dashboard](screenshots/uploaded-performance-light.png) and [mobile view](screenshots/mobile-uploaded.png).
 
 ![Performance overview](screenshots/performance.png)
 
@@ -69,7 +112,7 @@ Operating margin variance is expressed in **percentage points**. Period margins 
 
 The profit bridge includes each underlying category once; it excludes subtotals to avoid double counting. Period cash uses the first opening balance and final closing balance, rather than summing monthly balances. Unit-level cash allocations are additive illustrations; no intercompany transactions or consolidation adjustments are modelled.
 
-The P&L is simplified: tax, interest, a depreciation schedule and a full balance sheet are not modelled. Operating profit is **not net income**. Cash movements are not a statutory cash-flow statement or a forecast. The commentary identifies the largest adverse category contribution; aggregate data do not establish causes or support invoice-level conclusions.
+Validation checks structure, completeness and mathematical consistency; it does not audit uploaded records or establish their business accuracy. The P&L is simplified: tax, interest, a depreciation schedule and a full balance sheet are not modelled. Operating profit is **not net income**. Cash movements are not a statutory cash-flow statement or a forecast. The commentary identifies the largest adverse category contribution; aggregate data do not establish causes or support invoice-level conclusions.
 
 ## Run locally
 
@@ -98,7 +141,7 @@ python -m unittest discover -s tests -v
 python -m pip check
 ```
 
-The six financial tests cover the operating profit identity, an independently reconciled profit bridge, favourable/adverse signs, zero-budget percentages, cash period boundaries, monthly aggregation, business-unit additivity and rejection of broken cash/incomplete budgets. See [VALIDATION.md](VALIDATION.md) for app and browser checks actually executed.
+The financial tests cover the operating profit identity, an independently reconciled profit bridge, favourable/adverse signs, zero-budget percentages, cash period boundaries, monthly aggregation, business-unit additivity and rejection of broken cash/incomplete budgets. See [VALIDATION.md](VALIDATION.md) for app and browser checks actually executed.
 
 ## Project structure
 
@@ -106,6 +149,8 @@ The six financial tests cover the operating profit identity, an independently re
 finance-performance-dashboard/
 ├── app.py
 ├── finance.py
+├── imports.py
+├── upload_ui.py
 ├── themes.py
 ├── generate_data.py
 ├── requirements.txt
@@ -117,10 +162,12 @@ finance-performance-dashboard/
 │   ├── management_accounts.csv
 │   └── cash_movements.csv
 ├── screenshots/
-└── tests/test_finance.py
+└── tests/
+    ├── test_finance.py
+    └── test_imports.py
 ```
 
-Technologies: Python, Streamlit, Pandas, NumPy and Plotly. Native light and dark themes share green, blue and gold accents, with contrasting foreground colours. `themes.py` defines matching custom-component and chart palettes; `.streamlit/config.toml` defines native controls. Direct dependencies are pinned to the versions used for local verification.
+Technologies: Python, Streamlit, Pandas, NumPy and Plotly; openpyxl reads/writes Excel, with defusedxml XML parser hardening. Uploads do not require an AI service, database or additional account. Native light and dark themes share green, blue and gold accents, with contrasting foreground colours. `themes.py` defines matching custom-component and chart palettes; `.streamlit/config.toml` defines native controls. Direct dependencies are pinned to the versions used for local verification.
 
 ## GitHub and deployment
 
