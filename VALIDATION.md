@@ -105,3 +105,7 @@ URL: https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/
 - Native light/dark palettes, upload processing and synthetic source CSVs are unchanged. New comparisons and flags are pure per-viewer calculations; no uploaded-data cache or persistence was added.
 
 Public verification of this release is recorded after the deployment becomes available.
+
+## Public comparison verification — 23 November 2026
+
+The updated public app was verified in Chromium at https://finance-performance-dashboard-kfcrjeb9zde6gvyr22mwbc.streamlit.app/. Both real comparison CSVs contained the expected reference boundaries (January–October 2025 for prior year; March–December 2025 for the previous ten-month period) and matched the current £957,889.72 operating profit. The live budget flags changed from four underlying categories under Either to one under Both and zero with a £1m limit. Before/after P&L numeric fields remained identical. No browser pageerror events or final Streamlit exception element were observed. Mobile and missing-history checks were performed locally as recorded above.
